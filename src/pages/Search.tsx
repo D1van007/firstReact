@@ -1,11 +1,11 @@
 import Header from '../components/Header/Header';
 
-function Home() {
+function Search() {
   return (
     <>
       <Header />
-      <h1>Main page</h1>
+      <h1>Search</h1>
     </>
   );
 }
-export default Home;
+export default Search;

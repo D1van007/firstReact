@@ -1,11 +1,11 @@
 import Header from '../components/Header/Header';
 
-function Home() {
+function People() {
   return (
     <>
       <Header />
-      <h1>Main page</h1>
+      <h1>People</h1>
     </>
   );
 }
-export default Home;
+export default People;
