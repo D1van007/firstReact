@@ -1,11 +1,15 @@
-import Header from '../components/Header/Header';
+import { Component } from 'react';
+import PeopleList from '../api/PeopleList';
 
-function Home() {
-  return (
-    <>
-      <Header />
-      <h1>Main page</h1>
-    </>
-  );
+class Home extends Component {
+  render() {
+    return (
+      <>
+        <h1>Main page</h1>
+        <h1>Main page</h1>
+        <PeopleList />
+      </>
+    );
+  }
 }
 export default Home;

@@ -1,11 +1,13 @@
-import Header from '../components/Header/Header';
+import { Component } from 'react';
 
-function People() {
-  return (
-    <>
-      <Header />
-      <h1>People</h1>
-    </>
-  );
+class People extends Component {
+  render() {
+    return (
+      <>
+        <h1>People</h1>
+        <h1>People</h1>
+      </>
+    );
+  }
 }
 export default People;

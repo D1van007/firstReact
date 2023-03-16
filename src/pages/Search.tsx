@@ -1,11 +1,13 @@
-import Header from '../components/Header/Header';
+import { Component } from 'react';
 
-function Search() {
-  return (
-    <>
-      <Header />
-      <h1>Search</h1>
-    </>
-  );
+class Search extends Component {
+  render() {
+    return (
+      <>
+        <h1>Search</h1>
+        <input />
+      </>
+    );
+  }
 }
 export default Search;

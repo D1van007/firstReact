@@ -1,10 +1,15 @@
+import { Component } from 'react';
+import Header from '../components/header/Header';
 import Router from '../router/Router';
 
-function App() {
-  return (
-    <div>
-      <Router />
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <div>
+        <Header />
+        <Router />
+      </div>
+    );
+  }
 }
 export default App;

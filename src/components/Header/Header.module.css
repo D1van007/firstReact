@@ -4,3 +4,12 @@
     height: 5rem;
     align-items: center;
 }
+.header_nav__list {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+}
+
+nav {
+    width: 80%;
+}

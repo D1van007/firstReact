@@ -1,11 +1,13 @@
-import Header from '../components/Header/Header';
+import { Component } from 'react';
 
-function About() {
-  return (
-    <>
-      <Header />
-      <h1>About</h1>
-    </>
-  );
+class About extends Component {
+  render() {
+    return (
+      <>
+        <h1>About</h1>
+        <h1>About</h1>
+      </>
+    );
+  }
 }
 export default About;
