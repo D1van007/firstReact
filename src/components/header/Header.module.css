@@ -1,0 +1,16 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    height: 5rem;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+.header_nav__list {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+}
+
+nav {
+    width: 80%;
+}
