@@ -1,0 +1,9 @@
+.wrapper {
+    max-width: 1920px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 0 3rem;
+}
+.main {
+ min-height: calc(100vh - 5rem - 5rem - 2rem - 2rem);
+}

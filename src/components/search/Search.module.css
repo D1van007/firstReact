@@ -1,0 +1,17 @@
+.search_form {
+  max-width: 50rem;
+  width: 100%;
+  display: flex;
+  margin: 0 auto;
+  padding: 0 5rem;
+  gap: 1rem;
+}
+
+.search_form__input {
+  width: 100%;
+  padding: 0 0.5rem;
+}
+
+.search_form__btn {
+  width: 4rem;
+}

@@ -5,8 +5,10 @@ class NotFound extends Component {
   render() {
     return (
       <>
-        <h1>Not Found Page</h1>
-        <Link to="/">GO HOME</Link>
+        <h1 style={{ color: 'white' }}>Not Found Page</h1>
+        <Link style={{ color: 'yellow', textDecoration: 'none' }} to="/">
+          GO HOME
+        </Link>
       </>
     );
   }

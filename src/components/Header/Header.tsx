@@ -10,8 +10,8 @@ class Header extends Component {
         <Logo />
         <nav>
           <ul className={style.header_nav__list}>
-            <NavbarItem path="/" name="Main" />
-            <NavbarItem path="/people" name="People" />
+            <NavbarItem path="/" name="Home" />
+            <NavbarItem path="/people" name="Characters" />
             <NavbarItem path="/search" name="Search" />
             <NavbarItem path="/about" name="About" />
           </ul>

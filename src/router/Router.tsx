@@ -3,16 +3,16 @@ import { Route, Routes } from 'react-router-dom';
 import About from '../pages/About';
 import Home from '../pages/Home';
 import NotFound from '../pages/NotFound';
-import People from '../pages/People';
-import Search from '../pages/Search';
+import CharectersPage from '../pages/CharectersPage';
+import SearchPage from '../pages/SearchPage';
 
 class Router extends Component {
   render() {
     return (
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="people" element={<People />} />
-        <Route path="search" element={<Search />} />
+        <Route path="people" element={<CharectersPage />} />
+        <Route path="search" element={<SearchPage />} />
         <Route path="about" element={<About />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
