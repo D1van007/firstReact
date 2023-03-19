@@ -39,6 +39,7 @@ class Search extends Component<object, IState> {
       <form className={styles.search_form} onSubmit={this.handleFormSubmit}>
         <input
           className={styles.search_form__input}
+          data-testid="search-input"
           name="search"
           value={this.state.text}
           onChange={this.handleChange}
