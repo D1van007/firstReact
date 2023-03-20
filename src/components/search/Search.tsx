@@ -15,9 +15,7 @@ class Search extends Component<object, IState> {
 
   componentDidMount() {
     const valueLocalStorage = localStorage.getItem('searchValue');
-    valueLocalStorage
-      ? this.setState({ text: valueLocalStorage })
-      : this.setState({ text: '' });
+    if (valueLocalStorage) this.setState({ text: valueLocalStorage });
   }
 
   componentWillUnmount() {
@@ -44,7 +42,7 @@ class Search extends Component<object, IState> {
           value={this.state.text}
           onChange={this.handleChange}
         />
-        <button type="button" className={styles.search_form__btn}>
+        <button type="submit" className={styles.search_form__btn}>
           Search
         </button>
       </form>

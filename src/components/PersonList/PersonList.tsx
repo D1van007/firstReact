@@ -3,7 +3,7 @@ import React from 'react';
 import getApiPerson from '../../utils/network';
 import styles from './PersonList.module.css';
 import { API_PERSON } from '../../constants/api';
-import { IPerson, ISwapi } from '../../api/type';
+import { IPerson, ISwapi } from '../../types/type';
 import Card from '../card/Card';
 
 interface IState {
