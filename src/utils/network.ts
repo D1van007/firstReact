@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { ISwapi } from '../api/type';
+import { ISwapi } from '../types/type';
 
 async function getApiPerson(url: string): Promise<ISwapi | false> {
   try {

@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import styles from './Card.module.css';
-import { IPerson } from '../../api/type';
+import { IPerson } from '../../types/type';
 import { IMG_EXTENSION, IMG_PERSON_URL } from '../../constants/api';
 import getPersonID from '../../utils/personID';
 

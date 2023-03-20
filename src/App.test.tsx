@@ -1,26 +1,21 @@
 /* eslint-disable func-names */
-import { describe, it, vi } from 'vitest';
+import { describe, it } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import App from './app/App';
 import About from './pages/About';
-import PeopleList from './components/PersonList/PersonList';
 import Card from './components/card/Card';
 import Search from './components/search/Search';
 
 describe('Page', () => {
   it('Renders About', () => {
-    // ARRANGE;
     render(<About />);
-    // ACT;
-
-    // EXPECT;
     expect(
       screen.getByRole('heading', {
-        level: 1,
+        level: 2,
       })
-    ).toHaveTextContent('About');
+    ).toHaveTextContent('A long time ago, in a galaxy far, far away…');
   });
   it('Render not found if invalid path', () => {
     render(

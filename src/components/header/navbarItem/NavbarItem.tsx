@@ -1,6 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styles from './NavbarItem.module.css';
 
 interface IProps {
@@ -12,9 +12,15 @@ class NavbarItem extends Component<IProps> {
   render() {
     return (
       <li className={styles.nav_item}>
-        <Link className={styles.nav_item__link} to={this.props.path}>
+        <NavLink
+          className={styles.nav_item__link}
+          style={({ isActive }) => {
+            return { color: isActive ? '#ffe917' : 'aliceblue' };
+          }}
+          to={this.props.path}
+        >
           {this.props.name}
-        </Link>
+        </NavLink>
       </li>
     );
   }
