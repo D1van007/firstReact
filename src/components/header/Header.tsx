@@ -11,6 +11,7 @@ class Header extends Component {
         <nav>
           <ul className={style.header_nav__list}>
             <NavbarItem path="/" name="Home" />
+            <NavbarItem path="/form" name="Form" />
             <NavbarItem path="/about" name="About" />
           </ul>
         </nav>
