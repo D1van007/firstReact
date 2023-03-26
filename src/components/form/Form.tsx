@@ -1,5 +1,6 @@
+/* eslint-disable no-alert */
 /* eslint-disable class-methods-use-this */
-import { Component, createRef, FormEventHandler } from 'react';
+import { Component, createRef } from 'react';
 import styles from './Form.module.css';
 import { IForm } from '../../types/type';
 import getCreatedPersonArr from '../../utils/createdPersonArr';
@@ -61,14 +62,13 @@ class Form extends Component {
     localStorage.setItem('form', JSON.stringify(this.form));
   }
 
-  handleFormSubmit = (event: {
-    preventDefault: () => void;
-    target: { reset: () => void };
-  }) => {
+  handleFormSubmit = (
+    event: React.FormEvent<HTMLInputElement | HTMLFormElement>
+  ) => {
     event.preventDefault();
     this.setAllInputLocalStorage();
     this.createPerson();
-    event.target.reset();
+    (event.target as HTMLFormElement).reset();
     alert('Карточка создана и добавлена на главную страницу');
   };
 
@@ -88,7 +88,10 @@ class Form extends Component {
         other: this.genderRefOther.current?.checked as boolean,
       },
       homeworld: this.homeworldRef.current?.value as string,
-      foto: this.fotoRef.current !== null ? this.fotoRef.current.files[0] : '',
+      foto:
+        this.fotoRef.current !== null
+          ? /* this.fotoRef.current.files[0] */ ''
+          : '',
       checkbox: this.checkboxRef.current?.checked as boolean,
     };
   }
