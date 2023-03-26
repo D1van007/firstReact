@@ -14,11 +14,42 @@ export interface IPerson {
   starships?: string[];
   created?: string;
   edited?: string;
-  url: string;
+  url: string | File;
+  checkbox?: boolean;
 }
 export interface ISwapi {
   count: number;
   next: string | null;
   previous: string | null;
   results: IPerson[] | null;
+}
+
+export interface IHomeword {
+  name: string;
+  rotation_period: string;
+  orbital_period: string;
+  diameter: string;
+  climate: string;
+  gravity: string;
+  terrain: string;
+  surface_water: string;
+  population: string;
+  residents: string[];
+  films: string[];
+  created: string;
+  edited: string;
+  url: string;
+}
+
+export interface IForm {
+  name: string;
+  birth: string;
+  gender: {
+    male: boolean;
+    female: boolean;
+    other: boolean;
+  };
+  homeworld: string;
+  foto: string | File;
+  checkbox: boolean;
 }

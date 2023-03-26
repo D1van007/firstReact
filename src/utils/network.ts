@@ -1,15 +1,21 @@
-/* eslint-disable no-console */
-import { ISwapi } from '../types/type';
+import { IHomeword, ISwapi } from '../types/type';
 
-async function getApiPerson(url: string): Promise<ISwapi | false> {
+export async function getApiPerson(url: string): Promise<ISwapi | false> {
   try {
     const response = await fetch(url);
     const data: ISwapi = await response.json();
     return data;
   } catch (e) {
-    console.error(e);
     return false;
   }
 }
 
-export default getApiPerson;
+export async function getPlanetPerson(url: string): Promise<IHomeword | false> {
+  try {
+    const response = await fetch(url);
+    const data: IHomeword = await response.json();
+    return data;
+  } catch (e) {
+    return false;
+  }
+}

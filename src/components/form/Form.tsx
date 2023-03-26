@@ -1,18 +1,9 @@
-import { Component, createRef } from 'react';
+/* eslint-disable class-methods-use-this */
+import { Component, createRef, FormEventHandler } from 'react';
 import styles from './Form.module.css';
-
-interface IForm {
-  name: string;
-  birth: string;
-  gender: {
-    male: boolean;
-    female: boolean;
-    other: boolean;
-  };
-  homeworld: string;
-  foto: string;
-  checkbox: boolean;
-}
+import { IForm } from '../../types/type';
+import getCreatedPersonArr from '../../utils/createdPersonArr';
+import DEAFULT_FORM from '../../constants/deafultForm';
 
 class Form extends Component {
   form!: IForm;
@@ -36,18 +27,7 @@ class Form extends Component {
   componentDidMount() {
     this.form = JSON.parse(localStorage.getItem('form') as string)
       ? JSON.parse(localStorage.getItem('form') as string)
-      : {
-          name: '',
-          birth: '',
-          gender: {
-            male: false,
-            female: false,
-            other: false,
-          },
-          homeworld: '',
-          foto: '',
-          checkbox: false,
-        };
+      : DEAFULT_FORM;
 
     if (this.nameRef.current)
       (this.nameRef.current as HTMLInputElement).value = this.form.name;
@@ -66,7 +46,7 @@ class Form extends Component {
       (this.homeworldRef.current as HTMLSelectElement).value =
         this.form.homeworld;
     if (this.fotoRef.current)
-      (this.fotoRef.current as HTMLInputElement).value = this.form.foto;
+      (this.fotoRef.current as HTMLInputElement).value = '';
     if (this.checkboxRef.current)
       (this.checkboxRef.current as HTMLInputElement).checked =
         this.form.checkbox;
@@ -81,12 +61,24 @@ class Form extends Component {
     localStorage.setItem('form', JSON.stringify(this.form));
   }
 
-  handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  handleFormSubmit = (event: {
+    preventDefault: () => void;
+    target: { reset: () => void };
+  }) => {
     event.preventDefault();
     this.setAllInputLocalStorage();
+    this.createPerson();
+    event.target.reset();
+    alert('Карточка создана и добавлена на главную страницу');
   };
 
+  createPerson() {
+    const createdPersonArr = getCreatedPersonArr();
+    localStorage.setItem('createdPerson', JSON.stringify(createdPersonArr));
+  }
+
   redefineRef(): IForm {
+    // console.log(URL.createObjectURL(this.fotoRef.current?.files[0]));
     return {
       name: this.nameRef.current?.value as string,
       birth: this.birthRef.current?.value as string,
@@ -96,7 +88,7 @@ class Form extends Component {
         other: this.genderRefOther.current?.checked as boolean,
       },
       homeworld: this.homeworldRef.current?.value as string,
-      foto: this.fotoRef.current?.value as string,
+      foto: this.fotoRef.current !== null ? this.fotoRef.current.files[0] : '',
       checkbox: this.checkboxRef.current?.checked as boolean,
     };
   }
@@ -109,6 +101,7 @@ class Form extends Component {
           data-testid="name-input"
           type="text"
           name="name"
+          required
           ref={this.nameRef}
         />
         <input
@@ -117,6 +110,7 @@ class Form extends Component {
           placeholder="дата рождения"
           type="date"
           name="birth"
+          required
           ref={this.birthRef}
         />
         <div>
@@ -128,6 +122,8 @@ class Form extends Component {
               data-testid="gender-input"
               name="gender"
               type="radio"
+              value="Male"
+              required
               ref={this.genderRefMale}
             />
           </label>
@@ -139,6 +135,7 @@ class Form extends Component {
               data-testid="gender-input"
               name="gender"
               type="radio"
+              value="Female"
               ref={this.genderRefFemale}
             />
           </label>
@@ -150,6 +147,7 @@ class Form extends Component {
               data-testid="gender-input"
               name="gender"
               type="radio"
+              value="Other"
               ref={this.genderRefOther}
             />
           </label>
@@ -158,6 +156,7 @@ class Form extends Component {
           className={styles.form_input__homeworld}
           data-testid="homeworld-input"
           name="homeworld"
+          required
           ref={this.homeworldRef}
         >
           <option value="Earth">Earth</option>
@@ -172,6 +171,7 @@ class Form extends Component {
           name="foto"
           type="file"
           accept="image/*"
+          required
           ref={this.fotoRef}
         />
         <label htmlFor="checkboxAccept">
@@ -183,6 +183,7 @@ class Form extends Component {
             name="acceptData"
             type="checkbox"
             ref={this.checkboxRef}
+            required
           />
         </label>
         <button type="submit" className={styles.form_btn}>
