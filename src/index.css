@@ -79,7 +79,7 @@ select {
 
 #root {
     background-image: url(./assets/background.jpg);
-    background-size: cover;
+    background-size: auto;
     min-height: 100vh;
 }
 

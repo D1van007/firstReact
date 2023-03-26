@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable react/destructuring-assignment */
 import { Component } from 'react';
 import styles from './Search.module.css';
 
@@ -8,9 +7,12 @@ interface IState {
 }
 
 class Search extends Component<object, IState> {
+  text!: string;
+
   constructor(props: object) {
     super(props);
     this.state = { text: '' };
+    ({ text: this.text } = this.state);
   }
 
   componentDidMount() {
@@ -19,7 +21,7 @@ class Search extends Component<object, IState> {
   }
 
   componentWillUnmount() {
-    localStorage.setItem('searchValue', `${this.state.text}`);
+    localStorage.setItem('searchValue', `${this.text}`);
   }
 
   handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +31,7 @@ class Search extends Component<object, IState> {
 
   handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    localStorage.setItem('searchValue', `${this.state.text}`);
+    localStorage.setItem('searchValue', `${this.text}`);
   };
 
   render() {
@@ -39,7 +41,7 @@ class Search extends Component<object, IState> {
           className={styles.search_form__input}
           data-testid="search-input"
           name="search"
-          value={this.state.text}
+          value={this.text}
           onChange={this.handleChange}
         />
         <button type="submit" className={styles.search_form__btn}>
