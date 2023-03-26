@@ -1,0 +1,13 @@
+.nav_item {
+    list-style-type: none;
+}
+.nav_item__link {
+    text-decoration: none;
+    color: aliceblue;
+    font-size: 1.5rem;
+    margin: 0 1rem;
+}
+
+.nav_item__link .active {
+    color: #ffe917;
+}

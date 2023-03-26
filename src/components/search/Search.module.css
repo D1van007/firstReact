@@ -1,0 +1,23 @@
+.search_form {
+  max-width: 50rem;
+  width: 100%;
+  display: flex;
+  margin: 1rem auto;
+  padding: 0 5rem;
+  gap: 1rem;
+}
+
+.search_form__input {
+  background-color: rgba(98, 96, 96, 0.5);
+  color: white;
+  font-size: 1.2rem;
+  width: 100%;
+  outline:none;
+  padding: 0 0.5rem;
+  border-radius: 5px;
+}
+
+.search_form__btn {
+  width: 5rem;
+  border-radius: 5px;
+}

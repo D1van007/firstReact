@@ -1,0 +1,16 @@
+.person_item {
+    list-style-type: none;
+    max-width: 20rem;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid dimgray;
+    border-radius: 5px;
+    text-align: center;
+    background-color: aliceblue;
+}
+
+.person_foto {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
