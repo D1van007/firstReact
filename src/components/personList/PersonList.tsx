@@ -24,6 +24,7 @@ class PeopleList extends React.Component<object, IState> {
           localStorage.getItem('createdPerson') as string
         ) as IPerson[])
       : [];
+
     getApiPerson(API_PERSON).then((res) => {
       const person = [
         ...((res as ISwapi).results as IPerson[]),

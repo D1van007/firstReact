@@ -50,6 +50,6 @@ export interface IForm {
     other: boolean;
   };
   homeworld: string;
-  foto: string | File;
+  foto: string;
   checkbox: boolean;
 }

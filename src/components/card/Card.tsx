@@ -25,7 +25,7 @@ class Card extends Component<IPerson, IState> {
   render() {
     const imgUrl =
       this.props.checkbox === true
-        ? 'https://static.wikia.nocookie.net/rustarwars/images/7/73/Chewbaccaheadshot.jpg'
+        ? (this.props.url as string)
         : IMG_PERSON_URL +
           getPersonID((this.props.url as string).slice(0, -1)) +
           IMG_EXTENSION;

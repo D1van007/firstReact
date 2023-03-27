@@ -1,6 +1,7 @@
 .person_item {
     list-style-type: none;
     max-width: 20rem;
+    min-height: max-content;
     overflow: hidden;
     cursor: pointer;
     border: 1px solid dimgray;
@@ -11,6 +12,7 @@
 
 .person_foto {
     width: 100%;
+    height: calc(100% - 100px);
     object-fit: cover;
     object-position: center;
 }

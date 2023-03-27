@@ -46,8 +46,6 @@ class Form extends Component {
     if (this.homeworldRef.current)
       (this.homeworldRef.current as HTMLSelectElement).value =
         this.form.homeworld;
-    if (this.fotoRef.current)
-      (this.fotoRef.current as HTMLInputElement).value = '';
     if (this.checkboxRef.current)
       (this.checkboxRef.current as HTMLInputElement).checked =
         this.form.checkbox;
@@ -55,6 +53,18 @@ class Form extends Component {
 
   componentWillUnmount() {
     this.setAllInputLocalStorage();
+  }
+
+  handlerImgChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    if (event.target.files) {
+      const file = event.target.files[0];
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        const urlImgForm = String(fileReader.result);
+        localStorage.setItem('urlImgForm', urlImgForm);
+      };
+    }
   }
 
   setAllInputLocalStorage() {
@@ -69,7 +79,7 @@ class Form extends Component {
     this.setAllInputLocalStorage();
     this.createPerson();
     (event.target as HTMLFormElement).reset();
-    alert('Карточка создана и добавлена на главную страницу');
+    alert('Card created and added to home page');
   };
 
   createPerson() {
@@ -78,7 +88,6 @@ class Form extends Component {
   }
 
   redefineRef(): IForm {
-    // console.log(URL.createObjectURL(this.fotoRef.current?.files[0]));
     return {
       name: this.nameRef.current?.value as string,
       birth: this.birthRef.current?.value as string,
@@ -88,10 +97,9 @@ class Form extends Component {
         other: this.genderRefOther.current?.checked as boolean,
       },
       homeworld: this.homeworldRef.current?.value as string,
-      foto:
-        this.fotoRef.current !== null
-          ? /* this.fotoRef.current.files[0] */ ''
-          : '',
+      foto: localStorage.getItem('urlImgForm')
+        ? (localStorage.getItem('urlImgForm') as string)
+        : '',
       checkbox: this.checkboxRef.current?.checked as boolean,
     };
   }
@@ -99,28 +107,36 @@ class Form extends Component {
   render() {
     return (
       <form className={styles.form_inputs} onSubmit={this.handleFormSubmit}>
-        <input
-          className={styles.form_input__name}
-          data-testid="name-input"
-          type="text"
-          name="name"
-          required
-          ref={this.nameRef}
-        />
-        <input
-          className={styles.form_input__birth}
-          data-testid="birth-input"
-          placeholder="дата рождения"
-          type="date"
-          name="birth"
-          required
-          ref={this.birthRef}
-        />
-        <div>
-          <label htmlFor="maleId">
+        <h1 style={{ color: 'rgb(255, 233, 23)' }}>Starship pilot card</h1>
+        <label htmlFor="name-input" style={{ width: '100%' }}>
+          Name:
+          <input
+            id="name-input"
+            className={`${styles.form_input__name} ${styles.form_input}`}
+            data-testid="name-input"
+            type="text"
+            name="name"
+            placeholder="Enter your name..."
+            required
+            ref={this.nameRef}
+          />
+        </label>
+        <label htmlFor="birth-input" style={{ width: '100%' }}>
+          Birth:
+          <input
+            className={`${styles.form_input__name} ${styles.form_input}`}
+            data-testid="birth-input"
+            placeholder="дата рождения"
+            type="date"
+            name="birth"
+            required
+            ref={this.birthRef}
+          />
+        </label>
+        <div className={`${styles.form_input__gender}`}>
+          <label htmlFor="maleId" className={styles.gender_input__content}>
             Male
             <input
-              className={styles.form_input__gender}
               id="maleId"
               data-testid="gender-input"
               name="gender"
@@ -130,10 +146,9 @@ class Form extends Component {
               ref={this.genderRefMale}
             />
           </label>
-          <label htmlFor="maleId">
+          <label htmlFor="famaleId" className={styles.gender_input__content}>
             Famale
             <input
-              className={styles.form_input__gender}
               id="famaleId"
               data-testid="gender-input"
               name="gender"
@@ -142,10 +157,9 @@ class Form extends Component {
               ref={this.genderRefFemale}
             />
           </label>
-          <label htmlFor="otherGender">
+          <label htmlFor="otherGender" className={styles.gender_input__content}>
             Other
             <input
-              className={styles.form_input__gender}
               id="otherGender"
               data-testid="gender-input"
               name="gender"
@@ -155,33 +169,42 @@ class Form extends Component {
             />
           </label>
         </div>
-        <select
-          className={styles.form_input__homeworld}
-          data-testid="homeworld-input"
-          name="homeworld"
-          required
-          ref={this.homeworldRef}
+        <label htmlFor="homeworld-input" style={{ width: '100%' }}>
+          Homeworld:
+          <select
+            className={`${styles.form_input__name} ${styles.form_input}`}
+            data-testid="homeworld-input"
+            name="homeworld"
+            required
+            ref={this.homeworldRef}
+          >
+            <option value="Earth">Earth</option>
+            <option value="Tatooine">Tatooine</option>
+            <option value="Naboo">Naboo</option>
+            <option value="Alderaan">Alderaan</option>
+            <option value="Stewjon">Stewjon</option>
+          </select>
+        </label>
+        <label htmlFor="foto-input" style={{ width: '100%' }}>
+          Photo:
+          <input
+            className={`${styles.form_input__photo} ${styles.form_input}`}
+            data-testid="foto-input"
+            name="foto"
+            type="file"
+            accept="image/*"
+            required
+            onChange={this.handlerImgChange}
+            ref={this.fotoRef}
+          />
+        </label>
+        <label
+          htmlFor="checkboxAccept"
+          className={`${styles.form_input__checkbox} ${styles.form_input}`}
         >
-          <option value="Earth">Earth</option>
-          <option value="Tatooine">Tatooine</option>
-          <option value="Naboo">Naboo</option>
-          <option value="Alderaan">Alderaan</option>
-          <option value="Stewjon">Stewjon</option>
-        </select>
-        <input
-          className={styles.form_input__foto}
-          data-testid="foto-input"
-          name="foto"
-          type="file"
-          accept="image/*"
-          required
-          ref={this.fotoRef}
-        />
-        <label htmlFor="checkboxAccept">
-          Соглашаетесь с отправкой данных
+          Consent to the processing of personal data
           <input
             id="checkboxAccept"
-            className={styles.form_input__checkbox}
             data-testid="checkbox-input"
             name="acceptData"
             type="checkbox"
