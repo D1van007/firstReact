@@ -9,13 +9,9 @@ function createdPersonArr() {
     ? (JSON.parse(localStorage.getItem('form') as string) as IForm)
     : DEAFULT_FORM;
   const newPerson: IPerson = {
-    name: createdForm.name,
+    name: createdForm.fullName,
     birth_year: createdForm.birth,
-    gender: createdForm.gender.female
-      ? 'Female'
-      : createdForm.gender.male
-      ? 'Male'
-      : 'Other',
+    gender: createdForm.gender,
     homeworld: createdForm.homeworld,
     url: createdForm.foto,
     checkbox: createdForm.checkbox,

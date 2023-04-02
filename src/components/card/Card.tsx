@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { useEffect, useState } from 'react';
 import styles from './Card.module.css';
@@ -15,7 +16,7 @@ function Card(props: IPerson) {
       const homeworldRes = e as IHomeworld;
       setHome(homeworldRes);
     });
-  });
+  }, []);
 
   const imgUrl =
     checkbox === true
@@ -24,7 +25,7 @@ function Card(props: IPerson) {
         getPersonID((url as string).slice(0, -1)) +
         IMG_EXTENSION;
   const homeworldPers =
-    checkbox && home ? homeworld : (home as IHomeworld).name;
+    !checkbox && home ? (home as IHomeworld).name : homeworld;
 
   return (
     <li className={styles.person_item} key={name}>
@@ -32,7 +33,7 @@ function Card(props: IPerson) {
       <div>
         <h3>{name}</h3>
         <h4>Date of birth: {birth_year}</h4>
-        <h4>Homeword: {homeworldPers}</h4>
+        <h4>Homeworld: {homeworldPers}</h4>
         <h4>Gender: {gender}</h4>
       </div>
     </li>

@@ -1,11 +1,7 @@
 const DEAFULT_FORM = {
-  name: '',
+  fullName: '',
   birth: '',
-  gender: {
-    male: false,
-    female: false,
-    other: false,
-  },
+  gender: '',
   homeworld: '',
   foto: '',
   checkbox: false,

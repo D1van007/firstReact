@@ -43,13 +43,9 @@ export interface IHomeworld {
 }
 
 export interface IForm {
-  name: string;
+  fullName: string;
   birth: string;
-  gender: {
-    male: boolean;
-    female: boolean;
-    other: boolean;
-  };
+  gender: string;
   homeworld: string;
   foto: string;
   checkbox: boolean;
