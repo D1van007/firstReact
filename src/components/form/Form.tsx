@@ -26,7 +26,6 @@ function Form() {
       fileReader.readAsDataURL(file);
       fileReader.onload = () => {
         const urlImgForm = String(fileReader.result);
-        watch().foto = urlImgForm;
         localStorage.setItem('urlImgForm', urlImgForm);
       };
     }
@@ -60,10 +59,10 @@ function Form() {
         Name:
         <input
           {...register('fullName', {
-            required: 'Это поле обязательное для заполнения',
+            required: 'This field is required',
             minLength: {
               value: 2,
-              message: 'Мнимум 2 символа',
+              message: 'Minimum two characters',
             },
           })}
           id="name-input"
@@ -83,7 +82,7 @@ function Form() {
           data-testid="birth-input"
           type="date"
           {...register('birth', {
-            required: 'Это поле обязательное для заполнения',
+            required: 'This field is required',
           })}
         />
         <div style={{ height: '1rem', color: 'red', padding: 0 }}>
