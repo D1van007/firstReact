@@ -5,9 +5,9 @@ export interface IPerson {
   hairColor?: string;
   skinColor?: string;
   eyeColor?: string;
-  birth_year?: string;
+  birthYear?: string;
   gender?: string;
-  homeworld?: string;
+  homeworld: string;
   films?: string[];
   species?: string[];
   vehicles?: string[];
@@ -24,7 +24,7 @@ export interface ISwapi {
   results: IPerson[] | null;
 }
 
-export interface IHomeword {
+export interface IHomeworld {
   name: string;
   rotation_period: string;
   orbital_period: string;
