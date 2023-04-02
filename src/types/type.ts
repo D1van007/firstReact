@@ -5,7 +5,7 @@ export interface IPerson {
   hairColor?: string;
   skinColor?: string;
   eyeColor?: string;
-  birthYear?: string;
+  birth_year: string;
   gender?: string;
   homeworld: string;
   films?: string[];
@@ -17,6 +17,7 @@ export interface IPerson {
   url: string | File;
   checkbox?: boolean;
 }
+
 export interface ISwapi {
   count: number;
   next: string | null;

@@ -1,4 +1,4 @@
-import { IHomeword, ISwapi } from '../types/type';
+import { IHomeworld, ISwapi } from '../types/type';
 
 export async function getApiPerson(url: string): Promise<ISwapi | false> {
   try {
@@ -10,10 +10,12 @@ export async function getApiPerson(url: string): Promise<ISwapi | false> {
   }
 }
 
-export async function getPlanetPerson(url: string): Promise<IHomeword | false> {
+export async function getPlanetPerson(
+  url: string
+): Promise<IHomeworld | false> {
   try {
     const response = await fetch(url);
-    const data: IHomeword = await response.json();
+    const data: IHomeworld = await response.json();
     return data;
   } catch (e) {
     return false;

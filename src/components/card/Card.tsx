@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { useEffect, useState } from 'react';
 import styles from './Card.module.css';
 import { IHomeworld, IPerson } from '../../types/type';
@@ -7,7 +8,7 @@ import { getPlanetPerson } from '../../utils/network';
 
 function Card(props: IPerson) {
   const [home, setHome] = useState<IHomeworld | []>([]);
-  const { name, url, gender, homeworld, birthYear, checkbox } = props;
+  const { name, url, gender, homeworld, birth_year, checkbox } = props;
 
   useEffect(() => {
     getPlanetPerson(homeworld).then((e) => {
@@ -30,7 +31,7 @@ function Card(props: IPerson) {
       <img className={styles.person_foto} src={imgUrl} alt={name} />
       <div>
         <h3>{name}</h3>
-        <h4>Date of birth: {birthYear}</h4>
+        <h4>Date of birth: {birth_year}</h4>
         <h4>Homeword: {homeworldPers}</h4>
         <h4>Gender: {gender}</h4>
       </div>
