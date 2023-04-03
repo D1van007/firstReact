@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 import { useEffect, useState } from 'react';
 import styles from './Search.module.css';
 

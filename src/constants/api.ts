@@ -1,5 +1,4 @@
 const HTTPS = 'https://';
-// const HTTP = 'http://';
 const SWAPI_ROOT = 'swapi.dev/api/';
 const PATH_PERSON = 'people';
 export const API_PERSON = HTTPS + SWAPI_ROOT + PATH_PERSON;

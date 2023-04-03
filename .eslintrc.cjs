@@ -14,6 +14,7 @@ module.exports = {
   overrides: [],
   parser: '@typescript-eslint/parser',
   parserOptions: {
+    parser: '@typescript-eslint/parser',
     ecmaVersion: 'latest',
     sourceType: 'module',
     project: './tsconfig.json',
@@ -24,5 +25,6 @@ module.exports = {
     'import/no-extraneous-dependencies': 0,
     'import/no-useless-path-segments': 0,
     'react/prefer-stateless-function': 0,
+    'react-hooks/exhaustive-deps': 0,
   },
 };
