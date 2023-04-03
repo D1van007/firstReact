@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-alert */
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import styles from './Form.module.css';
 import getCreatedPersonArr from '../../utils/createdPersonArr';
 import DEAFULT_FORM from '../../constants/deafultForm';
@@ -13,9 +14,11 @@ function Form() {
     reset,
     watch,
   } = useForm({
-    mode: 'onBlur',
+    mode: 'onSubmit',
     defaultValues: DEAFULT_FORM,
   });
+
+  const [uploadImg, setUploadImg] = useState('');
 
   const handlerImgChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -26,14 +29,14 @@ function Form() {
       fileReader.readAsDataURL(file);
       fileReader.onload = () => {
         const urlImgForm = String(fileReader.result);
-        localStorage.setItem('urlImgForm', urlImgForm);
+        setUploadImg(urlImgForm);
       };
     }
   };
 
   const setAllInputLocalStorage = () => {
     const myForm = watch();
-    myForm.foto = localStorage.getItem('urlImgForm') as string;
+    myForm.foto = uploadImg;
     localStorage.setItem('form', JSON.stringify(myForm));
   };
 
@@ -59,7 +62,7 @@ function Form() {
         Name:
         <input
           {...register('fullName', {
-            required: 'This field is required',
+            required: 'Please enter your name',
             minLength: {
               value: 2,
               message: 'Minimum two characters',
@@ -70,7 +73,7 @@ function Form() {
           data-testid="name-input"
           placeholder="Enter your name..."
         />
-        <div style={{ height: '1rem', color: 'red', padding: 0 }}>
+        <div className={`${styles.error_title}`}>
           {errors?.fullName && <p>{errors?.fullName?.message || 'Errors!'}</p>}
         </div>
       </label>
@@ -82,10 +85,10 @@ function Form() {
           data-testid="birth-input"
           type="date"
           {...register('birth', {
-            required: 'This field is required',
+            required: 'Please enter date of birth',
           })}
         />
-        <div style={{ height: '1rem', color: 'red', padding: 0 }}>
+        <div className={`${styles.error_title}`}>
           {errors?.birth && <p>{errors?.birth?.message || 'Errors!'}</p>}
         </div>
       </label>
@@ -99,7 +102,7 @@ function Form() {
             type="radio"
             value="Male"
             {...register('gender', {
-              required: true,
+              required: 'Choose the gender!',
             })}
           />
         </label>
@@ -109,7 +112,7 @@ function Form() {
             id="famaleId"
             data-testid="gender-input"
             {...register('gender', {
-              required: true,
+              required: 'Choose the gender!',
             })}
             type="radio"
             value="Female"
@@ -121,12 +124,15 @@ function Form() {
             id="otherGender"
             data-testid="gender-input"
             {...register('gender', {
-              required: true,
+              required: 'Choose the gender!',
             })}
             type="radio"
             value="Other"
           />
         </label>
+        <div className={`${styles.error_title}`}>
+          {errors?.gender && <p>{errors?.gender.message || 'Errors!'}</p>}
+        </div>
       </div>
       <label htmlFor="homeworld-input" style={{ width: '100%' }}>
         Homeworld:
@@ -135,7 +141,7 @@ function Form() {
           data-testid="homeworld-input"
           placeholder="Select Planet"
           {...register('homeworld', {
-            required: true,
+            required: 'Choose homeworld!',
           })}
         >
           <option value="Earth">Earth</option>
@@ -144,6 +150,9 @@ function Form() {
           <option value="Alderaan">Alderaan</option>
           <option value="Stewjon">Stewjon</option>
         </select>
+        <div className={`${styles.error_title}`}>
+          {errors?.homeworld && <p>{errors?.homeworld.message || 'Errors!'}</p>}
+        </div>
       </label>
       <label htmlFor="foto-input" style={{ width: '100%' }}>
         Photo:
@@ -153,10 +162,13 @@ function Form() {
           type="file"
           accept="image/*"
           {...register('foto', {
-            required: true,
+            required: 'Upload your photo!',
           })}
           onChange={handlerImgChange}
         />
+        <div className={`${styles.error_title}`}>
+          {errors?.foto && <p>{errors?.foto.message || 'Errors!'}</p>}
+        </div>
       </label>
       <label
         htmlFor="checkboxAccept"
@@ -167,12 +179,15 @@ function Form() {
           id="checkboxAccept"
           data-testid="checkbox-input"
           {...register('checkbox', {
-            required: true,
+            required:
+              'To send a form confirming the processing of personal data',
           })}
           type="checkbox"
-          required
         />
       </label>
+      <div className={`${styles.error_title}`}>
+        {errors?.checkbox && <p>{errors?.checkbox.message || 'Errors!'}</p>}
+      </div>
       <button type="submit" className={styles.form_btn}>
         Submit
       </button>

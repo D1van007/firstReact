@@ -1,4 +1,3 @@
-/* eslint-disable func-names */
 import { describe, it } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
@@ -32,7 +31,7 @@ describe('Page', () => {
     ).toHaveTextContent('Not Found Page');
   });
 
-  it('User element: exist after fetch data', async function () {
+  it('User element: exist after fetch data', async function exem() {
     render(
       <Card
         key="Luke Skywalker"

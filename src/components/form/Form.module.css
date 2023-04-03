@@ -33,7 +33,7 @@
 .gender_input__content {
   display: flex;
   color: aliceblue;
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .form_input__photo {
@@ -56,11 +56,17 @@
   margin: 2rem 0;
   border: none;
   border-radius: 0.4rem;
-background: rgb(255, 233, 23, 0.8);
-border: 1px solid black;
-cursor: pointer;
+  background: rgb(255, 233, 23, 0.8);
+  border: 1px solid black;
+  cursor: pointer;
 }
 
 .form_btn:hover {
   background: rgb(255, 233, 23);
+}
+
+.error_title {
+  height: '1rem';
+  color: 'red';
+  padding: 0;
 }

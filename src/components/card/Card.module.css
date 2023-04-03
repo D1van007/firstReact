@@ -1,18 +1,18 @@
 .person_item {
-    list-style-type: none;
-    max-width: 20rem;
-    min-height: max-content;
-    overflow: hidden;
-    cursor: pointer;
-    border: 1px solid dimgray;
-    border-radius: 5px;
-    text-align: center;
-    background-color: aliceblue;
+  list-style-type: none;
+  max-width: 20rem;
+  min-height: max-content;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid dimgray;
+  border-radius: 5px;
+  text-align: center;
+  background-color: aliceblue;
 }
 
 .person_foto {
-    width: 100%;
-    height: calc(100% - 100px);
-    object-fit: cover;
-    object-position: center;
+  width: 100%;
+  height: calc(100% - 100px);
+  object-fit: cover;
+  object-position: center;
 }
