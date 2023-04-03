@@ -57,7 +57,7 @@ function Form() {
       className={styles.form_inputs}
       onSubmit={handleSubmit(handleFormSubmit)}
     >
-      <h1 style={{ color: 'rgb(255, 233, 23)' }}>Starship pilot card</h1>
+      <h1 className={`${styles.title}`}>Starship pilot card</h1>
       <label htmlFor="name-input" style={{ width: '100%' }}>
         Name:
         <input
@@ -170,23 +170,25 @@ function Form() {
           {errors?.foto && <p>{errors?.foto.message || 'Errors!'}</p>}
         </div>
       </label>
-      <label
-        htmlFor="checkboxAccept"
-        className={`${styles.form_input__checkbox} ${styles.form_input}`}
-      >
-        Consent to the processing of personal data
-        <input
-          id="checkboxAccept"
-          data-testid="checkbox-input"
-          {...register('checkbox', {
-            required:
-              'To send a form confirming the processing of personal data',
-          })}
-          type="checkbox"
-        />
-      </label>
-      <div className={`${styles.error_title}`}>
-        {errors?.checkbox && <p>{errors?.checkbox.message || 'Errors!'}</p>}
+      <div>
+        <label
+          htmlFor="checkboxAccept"
+          className={`${styles.form_input__checkbox} ${styles.form_input}`}
+        >
+          Consent to the processing of personal data
+          <input
+            id="checkboxAccept"
+            data-testid="checkbox-input"
+            {...register('checkbox', {
+              required:
+                'To send a form confirming the processing of personal data',
+            })}
+            type="checkbox"
+          />
+        </label>
+        <div className={`${styles.error_title}`}>
+          {errors?.checkbox && <p>{errors?.checkbox.message || 'Errors!'}</p>}
+        </div>
       </div>
       <button type="submit" className={styles.form_btn}>
         Submit
