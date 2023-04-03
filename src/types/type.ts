@@ -5,9 +5,9 @@ export interface IPerson {
   hairColor?: string;
   skinColor?: string;
   eyeColor?: string;
-  birth_year?: string;
+  birth_year: string;
   gender?: string;
-  homeworld?: string;
+  homeworld: string;
   films?: string[];
   species?: string[];
   vehicles?: string[];
@@ -17,6 +17,7 @@ export interface IPerson {
   url: string | File;
   checkbox?: boolean;
 }
+
 export interface ISwapi {
   count: number;
   next: string | null;
@@ -24,7 +25,7 @@ export interface ISwapi {
   results: IPerson[] | null;
 }
 
-export interface IHomeword {
+export interface IHomeworld {
   name: string;
   rotation_period: string;
   orbital_period: string;
@@ -42,13 +43,9 @@ export interface IHomeword {
 }
 
 export interface IForm {
-  name: string;
+  fullName: string;
   birth: string;
-  gender: {
-    male: boolean;
-    female: boolean;
-    other: boolean;
-  };
+  gender: string;
   homeworld: string;
   foto: string;
   checkbox: boolean;

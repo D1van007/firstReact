@@ -1,51 +1,42 @@
 /* eslint-disable react/destructuring-assignment */
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Search.module.css';
 
-interface IState {
-  text: string;
-}
+function Search() {
+  const [text, setText] = useState<string>('');
 
-class Search extends Component<object, IState> {
-  constructor(props: object) {
-    super(props);
-    this.state = { text: '' };
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     const valueLocalStorage = localStorage.getItem('searchValue');
-    if (valueLocalStorage) this.setState({ text: valueLocalStorage });
-  }
+    if (valueLocalStorage) setText(valueLocalStorage);
+  }, []);
 
-  componentWillUnmount() {
-    localStorage.setItem('searchValue', `${this.state.text}`);
-  }
+  useEffect(() => {
+    return localStorage.setItem('searchValue', text);
+  });
 
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.currentTarget.value;
-    this.setState({ text: input });
+    setText(input);
   };
 
-  handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    localStorage.setItem('searchValue', `${this.state.text}`);
+    localStorage.setItem('searchValue', text);
   };
 
-  render() {
-    return (
-      <form className={styles.search_form} onSubmit={this.handleFormSubmit}>
-        <input
-          className={styles.search_form__input}
-          data-testid="search-input"
-          name="search"
-          value={this.state.text}
-          onChange={this.handleChange}
-        />
-        <button type="submit" className={styles.search_form__btn}>
-          Search
-        </button>
-      </form>
-    );
-  }
+  return (
+    <form className={styles.search_form} onSubmit={handleFormSubmit}>
+      <input
+        className={styles.search_form__input}
+        data-testid="search-input"
+        name="search"
+        value={text}
+        onChange={handleChange}
+      />
+      <button type="submit" className={styles.search_form__btn}>
+        Search
+      </button>
+    </form>
+  );
 }
 export default Search;
