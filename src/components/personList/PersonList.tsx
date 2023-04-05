@@ -5,7 +5,11 @@ import { API_PERSON } from '../../constants/api';
 import { IPerson, ISwapi } from '../../types/type';
 import Card from '../card/Card';
 
-function PeopleList() {
+interface Props {
+  textFromSearch: string;
+}
+
+function PeopleList({ textFromSearch }: Props) {
   const [person, setPerson] = useState<IPerson[] | []>([]);
 
   useEffect(() => {
@@ -14,12 +18,16 @@ function PeopleList() {
         localStorage.getItem('createdPerson') as string
       ) as IPerson[]) || [];
 
-    getApiPerson(API_PERSON).then((res) => {
+    const personApi = textFromSearch
+      ? `${API_PERSON}/?search=${textFromSearch}`
+      : API_PERSON;
+
+    getApiPerson(personApi).then((res) => {
       const personsRes = ((res as ISwapi).results as IPerson[]) || [];
       const personJoint = [...personsRes, ...createdPerson];
       setPerson(personJoint);
     });
-  }, []);
+  }, [textFromSearch]);
 
   return (
     <ul className={styles.person_list}>
