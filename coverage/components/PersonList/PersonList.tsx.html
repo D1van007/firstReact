@@ -146,7 +146,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useEffect, useState } from 'react';
-import { getApiPerson } from '../../utils/network';
+import { getApiResource } from '../../utils/network';
 import styles from './PersonList.module.css';
 import { API_PERSON } from '../../constants/api';
 import { IPerson, ISwapi } from '../../types/type';
@@ -161,7 +161,7 @@ import Card from '../card/Card';
 <span class="cstat-no" title="statement not covered" >        localStorage.getItem('createdPerson') as string</span>
 <span class="cstat-no" title="statement not covered" >      ) as IPerson[]) || [];</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    getApiPerson(API_PERSON).then((res) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    getApiResource(API_PERSON).then((res) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      const personsRes = ((res as ISwapi).results as IPerson[]) || [];</span>
 <span class="cstat-no" title="statement not covered" >      const personJoint = [...personsRes, ...createdPerson];</span>
 <span class="cstat-no" title="statement not covered" >      setPerson(personJoint);</span>

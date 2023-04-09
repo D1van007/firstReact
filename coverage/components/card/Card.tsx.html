@@ -149,14 +149,14 @@ import styles from './Card.module.css';
 import { IHomeworld, IPerson } from '../../types/type';
 import { IMG_EXTENSION, IMG_PERSON_URL } from '../../constants/api';
 import getPersonID from '../../utils/personID';
-import { getPlanetPerson } from '../../utils/network';
+import { getApiResource } from '../../utils/network';
 &nbsp;
 function Card(props: IPerson) {
   const [home, setHome] = useState&lt;IHomeworld | []&gt;([]);
   const { name, url, gender, homeworld, birth_year, checkbox } = props;
 &nbsp;
   useEffect(() =&gt; {
-    getPlanetPerson(homeworld).then((e) =&gt; {
+    getApiResource(homeworld).then((e) =&gt; {
       const homeworldRes = e as IHomeworld;
       setHome(homeworldRes);
     });

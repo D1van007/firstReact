@@ -4001,7 +4001,7 @@
     "b": { "0": [1], "1": [0], "2": [1] },
     "fnMap": {
       "0": {
-        "name": "getApiPerson",
+        "name": "getApiResource",
         "decl": {
           "start": { "line": 3, "column": 73 },
           "end": { "line": 11, "column": 1 }
@@ -4025,7 +4025,7 @@
         "line": 11
       },
       "2": {
-        "name": "getPlanetPerson",
+        "name": "getApiResource",
         "decl": {
           "start": { "line": 13, "column": 0 },
           "end": { "line": 23, "column": 1 }

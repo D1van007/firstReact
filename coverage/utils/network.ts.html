@@ -107,7 +107,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IHomeworld, ISwapi } from '../types/type';
 &nbsp;
-export async function getApiPerson(url: string): Promise&lt;ISwapi | false&gt; <span class="fstat-no" title="function not covered" >{</span>
+export async function getApiResource(url: string): Promise&lt;ISwapi | false&gt; <span class="fstat-no" title="function not covered" >{</span>
 <span class="cstat-no" title="statement not covered" >  try {</span>
 <span class="cstat-no" title="statement not covered" >    const response = await fetch(url);</span>
 <span class="cstat-no" title="statement not covered" >    const data: ISwapi = await response.json();</span>
@@ -117,7 +117,7 @@ export async function getApiPerson(url: string): Promise&lt;ISwapi | false&gt; <
 <span class="cstat-no" title="statement not covered" >  }</span>
 <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >}</span></span>
 &nbsp;
-export async function getPlanetPerson(
+export async function getApiResource(
   url: string
 ): Promise&lt;IHomeworld | false&gt; {
   try {
