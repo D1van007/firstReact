@@ -17,7 +17,7 @@ function PersonList({ textFromSearch }: Props) {
   const createdPerson =
     (
       JSON.parse(localStorage.getItem('createdPerson') as string) as IPerson[]
-    ).filter((e) =>
+    )?.filter((e) =>
       e.name.toLowerCase().includes(textFromSearch.toLowerCase())
     ) || [];
 
