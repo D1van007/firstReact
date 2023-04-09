@@ -46,7 +46,13 @@ describe('Page', () => {
   });
 
   it('should be able to type name input field', () => {
-    const { getByTestId } = render(<Search />);
+    const { getByTestId } = render(
+      <Search
+        inputText={(incomingText: string) => {
+          incomingText.toLocaleLowerCase();
+        }}
+      />
+    );
 
     fireEvent.change(getByTestId('search-input'), {
       target: { value: 'search' },

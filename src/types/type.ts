@@ -2,9 +2,9 @@ export interface IPerson {
   name: string;
   height?: number;
   mass?: number;
-  hairColor?: string;
-  skinColor?: string;
-  eyeColor?: string;
+  hair_color?: string;
+  skin_color?: string;
+  eye_color?: string;
   birth_year: string;
   gender?: string;
   homeworld: string;
@@ -14,7 +14,7 @@ export interface IPerson {
   starships?: string[];
   created?: string;
   edited?: string;
-  url: string | File;
+  url: string;
   checkbox?: boolean;
 }
 
@@ -40,6 +40,16 @@ export interface IHomeworld {
   created: string;
   edited: string;
   url: string;
+}
+
+export interface IFilms {
+  title: string;
+  episode_id: number;
+  opening_crawl: string;
+  director: string;
+  producer: string;
+  release_date: string;
+  characters: string[];
 }
 
 export interface IForm {
