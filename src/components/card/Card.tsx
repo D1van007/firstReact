@@ -11,14 +11,15 @@ import Popup from '../popup/Popup';
 function Card(props: IPerson) {
   const [home, setHome] = useState<IHomeworld | []>([]);
   const [isPopup, setIsPopup] = useState(false);
-  const { name, url, gender, homeworld, birth_year, checkbox } =
-    props as IPerson;
+  const [isFetching, setIsFetching] = useState(true);
+  const { name, url, gender, homeworld, birth_year, checkbox } = props;
 
   useEffect(() => {
-    getApiResource(homeworld).then((e) => {
-      const homeworldRes = e as IHomeworld;
-      setHome(homeworldRes);
-    });
+    (async () => {
+      const res = await getApiResource(homeworld);
+      setHome(res as IHomeworld);
+      setIsFetching(false);
+    })();
   }, []);
 
   const handleClick = () => {
@@ -55,7 +56,11 @@ function Card(props: IPerson) {
         <div>
           <h3>{name}</h3>
           <h4>Date of birth: {birth_year}</h4>
-          <h4>Homeworld: {homeworldPers}</h4>
+          {!isFetching ? (
+            <h4>Homeworld: {homeworldPers}</h4>
+          ) : (
+            <h4>Loading...</h4>
+          )}
           <h4>Gender: {gender}</h4>
         </div>
       </li>

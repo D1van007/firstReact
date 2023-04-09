@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { useEffect, useState } from 'react';
 import styles from './CardExtended.module.css';
 import { IFilms, IHomeworld, IPerson } from '../../types/type';
 import { API_PERSON, IMG_EXTENSION, IMG_PERSON_URL } from '../../constants/api';
 import getApiResource, { makeRequest } from '../../utils/network';
+import Loading from '../UI/UILoading/Loading';
 
 interface IProps {
   personID: string | null;
@@ -17,6 +17,7 @@ function CardExtended({ personID, personName }: IProps) {
   const [home, setHome] = useState<IHomeworld | string | []>([]);
   const [personFilms, setPersonFilms] = useState<IFilms[] | []>([]);
   const [isPopup, setIsPopup] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
 
   const {
     name,
@@ -49,6 +50,7 @@ function CardExtended({ personID, personName }: IProps) {
 
   if (!personID) {
     useEffect(() => {
+      setIsFetching(false);
       const person = (
         JSON.parse(localStorage.getItem('createdPerson') as string) as IPerson[]
       ).find((e) => {
@@ -70,8 +72,8 @@ function CardExtended({ personID, personName }: IProps) {
       if (films) {
         (async () => {
           const res = await makeRequest(films);
+          setIsFetching(false);
           setPersonFilms(res as IFilms[]);
-          console.log(res);
         })();
       }
     }, [personInfo]);
@@ -87,7 +89,9 @@ function CardExtended({ personID, personName }: IProps) {
     }
   };
 
-  return (
+  return isFetching ? (
+    <Loading />
+  ) : (
     <div
       className={styles.person_content}
       key={name}
@@ -95,6 +99,7 @@ function CardExtended({ personID, personName }: IProps) {
       role="presentation"
     >
       <h2 className={styles.person_name}>{name}</h2>
+
       <div className={styles.person_info}>
         <div className={personID ? styles.person_foto : styles.myPerson_foto}>
           <img src={imgUrl} alt={name} />

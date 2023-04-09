@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import PeopleList from '../components/personList/PersonList';
+
 import Search from '../components/search/Search';
+import PersonList from '../components/personList/PersonList';
 
 function Home() {
   const [searchText, setSearchText] = useState('');
@@ -12,7 +13,7 @@ function Home() {
   return (
     <>
       <Search inputText={inputText} />
-      <PeopleList textFromSearch={searchText} />;
+      <PersonList textFromSearch={searchText} />;
     </>
   );
 }

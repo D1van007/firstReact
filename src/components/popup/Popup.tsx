@@ -1,8 +1,5 @@
-/* eslint-disable import/no-cycle */
-/* eslint-disable @typescript-eslint/naming-convention */
-
-import CardExtended from '../card/CardExtended';
 import styles from './Popup.module.css';
+import CardExtended from '../card/CardExtended';
 
 interface IProps {
   isPopup: (element: boolean) => void;

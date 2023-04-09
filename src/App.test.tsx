@@ -7,6 +7,9 @@ import About from './pages/About';
 import Card from './components/card/Card';
 import Search from './components/search/Search';
 import Form from './components/form/Form';
+import { API_PERSON } from './constants/api';
+import PersonList from './components/personList/PersonList';
+import { makeRequest } from './utils/network';
 
 describe('Page', () => {
   it('Renders About', () => {
