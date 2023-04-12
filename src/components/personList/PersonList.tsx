@@ -13,6 +13,7 @@ interface Props {
 function PersonList({ textFromSearch }: Props) {
   const [person, setPerson] = useState<IPerson[] | []>([]);
   const [isFetching, setIsFetching] = useState(true);
+  const [error, setError] = useState('');
 
   const createdPerson =
     (
@@ -24,38 +25,52 @@ function PersonList({ textFromSearch }: Props) {
   useEffect(() => {
     const personApi = textFromSearch
       ? `${API_PERSON}/?search=${textFromSearch}`
-      : API_PERSON;
+      : `${API_PERSON}`;
+
     getApiResource(personApi).then((res) => {
       if (res) {
         const personsRes = (res as ISwapi).results as IPerson[];
         const personJoint = [...personsRes, ...createdPerson];
         setPerson(personJoint);
+        setError('');
         setIsFetching(false);
-      } else {
+      } else if (createdPerson.length) {
         setPerson(createdPerson);
+        setIsFetching(false);
+        setError('');
+      } else {
+        setError('Something went wrong!');
+        setIsFetching(false);
       }
     });
   }, [textFromSearch]);
 
-  return isFetching ? (
-    <Loading />
-  ) : (
-    <ul className={styles.person_list}>
-      {person &&
-        person.map(
-          ({ name, url, birth_year, homeworld, gender, checkbox }, i) => (
-            <Card
-              key={`${name}_${+i}`}
-              name={name}
-              url={url}
-              birth_year={birth_year}
-              homeworld={homeworld}
-              gender={gender}
-              checkbox={checkbox}
-            />
-          )
-        )}
-    </ul>
+  return (
+    <>
+      {error && <h2 className={styles.error}>{error}</h2>}
+      {isFetching ? (
+        <div className={styles.loading}>
+          <Loading />
+        </div>
+      ) : (
+        <ul className={styles.person_list}>
+          {person &&
+            person.map(
+              ({ name, url, birth_year, homeworld, gender, checkbox }, i) => (
+                <Card
+                  key={`${name}_${+i}`}
+                  name={name}
+                  url={url}
+                  birth_year={birth_year}
+                  homeworld={homeworld}
+                  gender={gender}
+                  checkbox={checkbox}
+                />
+              )
+            )}
+        </ul>
+      )}
+    </>
   );
 }
 

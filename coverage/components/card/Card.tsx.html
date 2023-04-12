@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.73% </span>
+                <span class="strong">84.7% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>63/71</span>
+                <span class='fraction'>72/85</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70% </span>
+                <span class="strong">45.45% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/10</span>
+                <span class='fraction'>5/11</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.73% </span>
+                <span class="strong">84.7% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>63/71</span>
+                <span class='fraction'>72/85</span>
             </div>
         
             
@@ -134,7 +134,21 @@
 <a name='L69'></a><a href='#L69'>69</a>
 <a name='L70'></a><a href='#L70'>70</a>
 <a name='L71'></a><a href='#L71'>71</a>
-<a name='L72'></a><a href='#L72'>72</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -151,6 +165,13 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -193,6 +214,13 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -219,13 +247,20 @@ function Card(props: IPerson) {
   const [home, setHome] = useState&lt;IHomeworld | []&gt;([]);
   const [isPopup, setIsPopup] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
+  const [error, setError] = useState('');
   const { name, url, gender, homeworld, birth_year, checkbox } = props;
 &nbsp;
   useEffect(() =&gt; {
     (async () =&gt; {
       const res = await getApiResource(homeworld);
-      setHome(res as IHomeworld);
-      setIsFetching(false);
+      if (res) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >        setHome(res as IHomeworld);</span>
+<span class="cstat-no" title="statement not covered" >        setIsFetching(false);</span>
+<span class="cstat-no" title="statement not covered" >        setError('');</span>
+      } else {
+        setError('Error!');
+        setIsFetching(false);
+      }
     })();
   }, []);
 &nbsp;
@@ -246,7 +281,7 @@ function Card(props: IPerson) {
 <span class="cstat-no" title="statement not covered" >      ? (url as string)</span>
       : IMG_PERSON_URL + personID + IMG_EXTENSION;
   const homeworldPers =
-    !checkbox &amp;&amp; home ? (home as IHomeworld).name : homeworld;
+    !checkbox &amp;&amp; home ? (home as IHomeworld).<span class="branch-0 cbranch-no" title="branch not covered" >name : homeworld;</span>
 &nbsp;
   return (
     &lt;&gt;
@@ -264,7 +299,14 @@ function Card(props: IPerson) {
           &lt;h3&gt;{name}&lt;/h3&gt;
           &lt;h4&gt;Date of birth: {birth_year}&lt;/h4&gt;
           {!isFetching ? (
-            &lt;h4&gt;Homeworld: {homeworldPers}&lt;/h4&gt;
+            &lt;h4&gt;
+              Homeworld:{' '}
+              {error ? (
+                &lt;span className={styles.error}&gt;{error}<span class="branch-0 cbranch-no" title="branch not covered" >&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >              ) : (</span>
+<span class="cstat-no" title="statement not covered" >                homeworldPers</span>
+              )}
+            &lt;/h4&gt;
           ) : (
             &lt;h4&gt;Loading...&lt;/h4&gt;
           )}
@@ -283,7 +325,7 @@ export default Card;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-04-09T20:40:04.054Z
+                at 2023-04-11T19:39:13.287Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

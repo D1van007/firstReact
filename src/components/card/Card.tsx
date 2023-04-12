@@ -12,13 +12,20 @@ function Card(props: IPerson) {
   const [home, setHome] = useState<IHomeworld | []>([]);
   const [isPopup, setIsPopup] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
+  const [error, setError] = useState('');
   const { name, url, gender, homeworld, birth_year, checkbox } = props;
 
   useEffect(() => {
     (async () => {
       const res = await getApiResource(homeworld);
-      setHome(res as IHomeworld);
-      setIsFetching(false);
+      if (res) {
+        setHome(res as IHomeworld);
+        setIsFetching(false);
+        setError('');
+      } else {
+        setError('Error!');
+        setIsFetching(false);
+      }
     })();
   }, []);
 
@@ -57,7 +64,14 @@ function Card(props: IPerson) {
           <h3>{name}</h3>
           <h4>Date of birth: {birth_year}</h4>
           {!isFetching ? (
-            <h4>Homeworld: {homeworldPers}</h4>
+            <h4>
+              Homeworld:{' '}
+              {error ? (
+                <span className={styles.error}>{error}</span>
+              ) : (
+                homeworldPers
+              )}
+            </h4>
           ) : (
             <h4>Loading...</h4>
           )}
