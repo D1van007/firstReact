@@ -1,24 +1,16 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/naming-convention */
-import { useEffect, useState } from 'react';
 import styles from './CardExtended.module.css';
-import { IFilms, IHomeworld, IPerson } from '../../types/type';
-import { API_PERSON, IMG_EXTENSION, IMG_PERSON_URL } from '../../constants/api';
-import getApiResource, { makeRequest } from '../../utils/network';
-import Loading from '../UI/UILoading/Loading';
+import { IFilms, IPerson } from '../../types/type';
+import { IMG_EXTENSION, IMG_PERSON_URL } from '../../constants/api';
+import pickUpPersonID from '../../utils/personID';
 
 interface IProps {
-  personID: string | null;
-  personName: string;
+  person: IPerson;
+  homeworldPerson: string;
+  personFilmsList: IFilms[] | string;
 }
 
-function CardExtended({ personID, personName }: IProps) {
-  const [personInfo, setPersonInfo] = useState<IPerson | []>([]);
-  const [home, setHome] = useState<IHomeworld | string | []>([]);
-  const [personFilms, setPersonFilms] = useState<IFilms[] | []>([]);
-  const [isPopup, setIsPopup] = useState(false);
-  const [isFetching, setIsFetching] = useState(true);
-
+function CardExtended({ person, homeworldPerson, personFilmsList }: IProps) {
   const {
     name,
     height,
@@ -28,91 +20,32 @@ function CardExtended({ personID, personName }: IProps) {
     eye_color,
     birth_year,
     gender,
-    homeworld,
-    films,
+    id,
     url,
-  } = personInfo as IPerson;
+    checkbox,
+  } = person as IPerson;
 
-  const personApi = `${API_PERSON}${personID}`;
+  const imgUrl = checkbox
+    ? (url as string)
+    : IMG_PERSON_URL + pickUpPersonID(url).slice(0, -1) + IMG_EXTENSION;
 
-  let imgUrl;
-  let homeworldPers;
-
-  useEffect(() => {
-    if (personID) {
-      getApiResource(personApi).then((res) => {
-        if (res) {
-          setPersonInfo(res as IPerson);
-        }
-      });
-    }
-  }, []);
-
-  if (!personID) {
-    useEffect(() => {
-      setIsFetching(false);
-      const person = (
-        JSON.parse(localStorage.getItem('createdPerson') as string) as IPerson[]
-      ).find((e) => {
-        return e.name === personName;
-      });
-      setPersonInfo(person as IPerson);
-    }, []);
-    imgUrl = url;
-    homeworldPers = homeworld;
-  } else {
-    useEffect(() => {
-      getApiResource(homeworld).then((e) => {
-        const homeworldRes = e as IHomeworld;
-        setHome(homeworldRes);
-      });
-    }, [personInfo]);
-
-    useEffect(() => {
-      if (films) {
-        (async () => {
-          const res = await makeRequest(films);
-          setIsFetching(false);
-          setPersonFilms(res as IFilms[]);
-        })();
-      }
-    }, [personInfo]);
-
-    imgUrl = IMG_PERSON_URL + personID + IMG_EXTENSION;
-
-    homeworldPers = (home as IHomeworld).name;
-  }
-
-  const handleClick = () => {
-    if (!isPopup) {
-      setIsPopup(true);
-    }
-  };
-
-  return isFetching ? (
-    <Loading />
-  ) : (
-    <div
-      className={styles.person_content}
-      key={name}
-      onClick={handleClick}
-      role="presentation"
-    >
+  return (
+    <div className={styles.person_content} key={name}>
       <h2 className={styles.person_name}>{name}</h2>
 
       <div className={styles.person_info}>
-        <div className={personID ? styles.person_foto : styles.myPerson_foto}>
+        <div className={id ? styles.person_foto : styles.myPerson_foto}>
           <img src={imgUrl} alt={name} />
         </div>
 
         <div
           className={
-            personID ? styles.person_description : styles.myPerson_description
+            id ? styles.person_description : styles.myPerson_description
           }
         >
           <h3>Description:</h3>
           <ul className={styles.person_description__list}>
-            {homeworldPers && <li>Homeworld: {homeworldPers}</li>}
+            {homeworldPerson && <li>Homeworld: {homeworldPerson}</li>}
             {gender && <li>Gender: {gender}</li>}
             {height && <li>Height: {`${height}cm`}</li>}
             {mass && <li>Mass: {`${mass}kg`}</li>}
@@ -123,11 +56,11 @@ function CardExtended({ personID, personName }: IProps) {
           </ul>
         </div>
 
-        {personID && (
-          <div className={styles.person_films}>
-            <h3>Films:</h3>
-            <ul className={styles.person_films__list}>
-              {personFilms
+        <div className={styles.person_films}>
+          <h3>Films:</h3>
+          <ul className={styles.person_films__list}>
+            {typeof personFilmsList !== 'string' ? (
+              personFilmsList
                 .sort((a, b) => {
                   return a.episode_id - b.episode_id;
                 })
@@ -138,10 +71,12 @@ function CardExtended({ personID, personName }: IProps) {
                       <span>{`"${e.title}"`}</span>
                     </li>
                   );
-                })}
-            </ul>
-          </div>
-        )}
+                })
+            ) : (
+              <span>{personFilmsList}</span>
+            )}
+          </ul>
+        </div>
       </div>
     </div>
   );
