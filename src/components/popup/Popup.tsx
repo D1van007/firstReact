@@ -1,14 +1,17 @@
 import styles from './Popup.module.css';
 import CardExtended from '../card/CardExtended';
+import { IFilms, IPerson } from '../../types/type';
 
 interface IProps {
   isPopup: (element: boolean) => void;
-  personID: string | null;
-  personName: string;
+  person: IPerson;
+  homeworldPerson: string;
+  personFilmsList: IFilms[] | string;
 }
 
 function Popup(props: IProps): JSX.Element {
-  const { isPopup, personID, personName } = props as IProps;
+  const { isPopup, person, homeworldPerson, personFilmsList } = props as IProps;
+
   return (
     <>
       <div
@@ -19,7 +22,11 @@ function Popup(props: IProps): JSX.Element {
         }}
       />
       <div className={styles.modal}>
-        <CardExtended personID={personID} personName={personName} />
+        <CardExtended
+          person={person}
+          homeworldPerson={homeworldPerson}
+          personFilmsList={personFilmsList}
+        />
       </div>
     </>
   );

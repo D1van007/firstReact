@@ -15,6 +15,7 @@ function createdPersonArr() {
     homeworld: createdForm.homeworld,
     url: createdForm.foto,
     checkbox: createdForm.checkbox,
+    id: new Date().getTime().toString(),
   };
   const getPersonArr: IPerson[] = (JSON.parse(
     localStorage.getItem('createdPerson') as string

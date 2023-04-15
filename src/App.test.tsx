@@ -1,4 +1,4 @@
-import { describe, it } from 'vitest';
+import { describe, it, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
@@ -11,7 +11,6 @@ import Search from './components/search/Search';
 import Form from './components/form/Form';
 import 'whatwg-fetch';
 import getApiResource from './utils/network';
-import PersonList from './components/personList/PersonList';
 import { IPerson, ISwapi } from './types/type';
 import Home from './pages/Home';
 
@@ -108,6 +107,10 @@ describe('Page', () => {
         homeworld="Tatooine"
         url="https://swapi.dev/api/people/1/"
         birth_year="19BBY"
+        id="1"
+        gender="Male"
+        checkbox
+        onClickCard={vi.fn}
       />
     );
 

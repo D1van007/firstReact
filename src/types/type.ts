@@ -6,7 +6,7 @@ export interface IPerson {
   skin_color?: string;
   eye_color?: string;
   birth_year: string;
-  gender?: string;
+  gender: string;
   homeworld: string;
   films?: string[];
   species?: string[];
@@ -16,13 +16,14 @@ export interface IPerson {
   edited?: string;
   url: string;
   checkbox?: boolean;
+  id?: string;
 }
 
 export interface ISwapi {
   count: number;
   next: string | null;
   previous: string | null;
-  results: IPerson[] | null;
+  results: IPerson[] | IFilms[] | IHomeworld[] | null;
 }
 
 export interface IHomeworld {
@@ -50,6 +51,7 @@ export interface IFilms {
   producer: string;
   release_date: string;
   characters: string[];
+  url: string;
 }
 
 export interface IForm {
