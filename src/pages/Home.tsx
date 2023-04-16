@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useMap } from 'usehooks-ts';
+import { useDispatch, useSelector } from 'react-redux';
 import { DEAFULT_PLANET } from '../constants/deafultForm';
 
 import Search from '../components/search/Search';
@@ -9,6 +10,7 @@ import { API_FILMS, API_PERSON } from '../constants/api';
 import getApiResource from '../utils/network';
 import Popup from '../components/popup/Popup';
 import pickUpPersonID from '../utils/personID';
+import { searchResults } from '../store/searchSlice';
 
 function Home() {
   const [searchText, setSearchText] = useState('');
@@ -24,10 +26,17 @@ function Home() {
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState('');
 
+  const textSearch = useSelector((state) => state.searchText.searchText);
+  const resultsSearch = useSelector(
+    (state) => state.searchResults.searchResults
+  );
+
+  const dispatch = useDispatch();
+
   const createdPerson =
     (
       JSON.parse(localStorage.getItem('createdPerson') as string) as IPerson[]
-    )?.filter((e) => e.name.toLowerCase().includes(searchText.toLowerCase())) ||
+    )?.filter((e) => e.name.toLowerCase().includes(textSearch.toLowerCase())) ||
     [];
 
   useEffect(() => {
@@ -59,26 +68,27 @@ function Home() {
   }, [personList]);
 
   useEffect(() => {
-    const personApi = searchText
-      ? `${API_PERSON}/?search=${searchText}`
+    const personApi = textSearch
+      ? `${API_PERSON}/?search=${textSearch}`
       : `${API_PERSON}`;
 
-    getApiResource(personApi).then((res) => {
-      if (res) {
-        const personsRes = (res as ISwapi).results as IPerson[];
-        const personJoint = [...personsRes, ...createdPerson];
-        setPersonList(personJoint);
-        setError('');
-        setIsFetching(false);
-      } else if (createdPerson.length) {
-        setPersonList(createdPerson);
-        setIsFetching(false);
-        setError('');
-      } else {
-        setError('Something went wrong!');
-        setIsFetching(false);
-      }
-    });
+    getApiResource(personApi)
+      .then((res) => {
+        if (res) {
+          const personsRes = (res as ISwapi).results as IPerson[];
+          const personJoint = [...personsRes, ...createdPerson];
+          dispatch(searchResults(personJoint));
+          // setPersonList(personJoint);
+          setError('');
+        } else if (createdPerson.length) {
+          dispatch(searchResults(createdPerson));
+          setPersonList(createdPerson);
+          setError('');
+        } else {
+          setError('Something went wrong!');
+        }
+      })
+      .finally(() => setIsFetching(false));
   }, [searchText]);
 
   const handleClickReturnID = (id: string) => {
@@ -125,7 +135,7 @@ function Home() {
       ) : null}
       <Search inputText={inputText} />
       <PersonList
-        personList={personList}
+        personList={resultsSearch}
         homeworldList={homeworldListMAP}
         isFetching={isFetching}
         error={error}
