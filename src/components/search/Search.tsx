@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { searchText } from '../../store/searchSlice';
 import styles from './Search.module.css';
 
 interface Props {
@@ -6,17 +8,9 @@ interface Props {
 }
 
 function Search({ inputText }: Props) {
-  const [text, setText] = useState<string>('');
+  const textSearch = useSelector((state) => state.searchText.searchText);
+  const dispatch = useDispatch();
   const [activeClose, setActiveClose] = useState(false);
-
-  useEffect(() => {
-    const valueLocalStorage = localStorage.getItem('searchValue');
-    if (valueLocalStorage) setText(valueLocalStorage);
-  }, []);
-
-  useEffect(() => {
-    return localStorage.setItem('searchValue', text);
-  });
 
   const visibleClose = (inputValue: string) => {
     if (inputValue.length > 0) setActiveClose(true);
@@ -25,7 +19,7 @@ function Search({ inputText }: Props) {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.currentTarget.value;
-    setText(input);
+    dispatch(searchText(input));
     visibleClose(input);
   };
 
@@ -33,12 +27,12 @@ function Search({ inputText }: Props) {
     event: React.FormEvent<HTMLFormElement> | KeyboardEvent
   ) => {
     event.preventDefault();
-    if ((event as KeyboardEvent).code === 'enter') inputText(text);
-    else inputText(text);
+    if ((event as KeyboardEvent).code === 'enter') inputText(textSearch);
+    else inputText(textSearch);
   };
 
   const handleClearInput = () => {
-    setText('');
+    dispatch(searchText(''));
     visibleClose('');
     inputText('');
   };
@@ -50,7 +44,7 @@ function Search({ inputText }: Props) {
           className={styles.search_form__input}
           data-testid="search-input"
           name="search"
-          value={text}
+          value={textSearch}
           onChange={handleChange}
         />
         <div onClick={handleClearInput} role="presentation">
