@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">18.18% </span>
+                <span class="strong">29.03% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>14/77</span>
+                <span class='fraction'>18/62</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">18.18% </span>
+                <span class="strong">29.03% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/77</span>
+                <span class='fraction'>18/62</span>
             </div>
         
             
@@ -125,22 +125,11 @@
 <a name='L60'></a><a href='#L60'>60</a>
 <a name='L61'></a><a href='#L61'>61</a>
 <a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a>
-<a name='L72'></a><a href='#L72'>72</a>
-<a name='L73'></a><a href='#L73'>73</a>
-<a name='L74'></a><a href='#L74'>74</a>
-<a name='L75'></a><a href='#L75'>75</a>
-<a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L63'></a><a href='#L63'>63</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -196,74 +185,31 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useEffect, useState } from 'react';
-import getApiResource from '../../utils/network';
-import styles from './PersonList.module.css';
-import { API_PERSON } from '../../constants/api';
-import { IPerson, ISwapi } from '../../types/type';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import styles from './PersonList.module.css';
+&nbsp;
+import { IHomeworld, IPerson } from '../../types/type';
 import Loading from '../UI/UILoading/Loading';
 import Card from '../card/Card';
 &nbsp;
 interface Props {
-  textFromSearch: string;
+  personList: IPerson[];
+  homeworldList:
+    | Omit&lt;Map&lt;string, IHomeworld&gt;, 'set' | 'clear' | 'delete'&gt;
+    | undefined;
+  onClickCard: (id: string) =&gt; void;
+  isFetching: boolean;
+  error: string;
 }
 &nbsp;
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >function PersonList({ textFromSearch }: Props) {</span></span>
-<span class="cstat-no" title="statement not covered" >  const [person, setPerson] = useState&lt;IPerson[] | []&gt;([]);</span>
-<span class="cstat-no" title="statement not covered" >  const [isFetching, setIsFetching] = useState(true);</span>
-<span class="cstat-no" title="statement not covered" >  const [error, setError] = useState('');</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >  const createdPerson =</span>
-<span class="cstat-no" title="statement not covered" >    (</span>
-<span class="cstat-no" title="statement not covered" >      JSON.parse(localStorage.getItem('createdPerson') as string) as IPerson[]</span>
-<span class="cstat-no" title="statement not covered" >    )?.filter((e) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      e.name.toLowerCase().includes(textFromSearch.toLowerCase())</span>
-<span class="cstat-no" title="statement not covered" >    ) || [];</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >  useEffect(() =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    const personApi = textFromSearch</span>
-<span class="cstat-no" title="statement not covered" >      ? `${API_PERSON}/?search=${textFromSearch}`</span>
-<span class="cstat-no" title="statement not covered" >      : `${API_PERSON}`;</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    getApiResource(personApi).then((res) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (res) {</span>
-<span class="cstat-no" title="statement not covered" >        const personsRes = (res as ISwapi).results as IPerson[];</span>
-<span class="cstat-no" title="statement not covered" >        const personJoint = [...personsRes, ...createdPerson];</span>
-<span class="cstat-no" title="statement not covered" >        setPerson(personJoint);</span>
-<span class="cstat-no" title="statement not covered" >        setError('');</span>
-<span class="cstat-no" title="statement not covered" >        setIsFetching(false);</span>
-<span class="cstat-no" title="statement not covered" >      } else if (createdPerson.length) {</span>
-<span class="cstat-no" title="statement not covered" >        setPerson(createdPerson);</span>
-<span class="cstat-no" title="statement not covered" >        setIsFetching(false);</span>
-<span class="cstat-no" title="statement not covered" >        setError('');</span>
-<span class="cstat-no" title="statement not covered" >      } else {</span>
-<span class="cstat-no" title="statement not covered" >        setError('Something went wrong!');</span>
-<span class="cstat-no" title="statement not covered" >        setIsFetching(false);</span>
-<span class="cstat-no" title="statement not covered" >      }</span>
-<span class="cstat-no" title="statement not covered" >    });</span>
-<span class="cstat-no" title="statement not covered" >  }, [textFromSearch]);</span>
-<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >function PersonList({</span></span>
+<span class="cstat-no" title="statement not covered" >  personList,</span>
+<span class="cstat-no" title="statement not covered" >  homeworldList,</span>
+<span class="cstat-no" title="statement not covered" >  isFetching,</span>
+<span class="cstat-no" title="statement not covered" >  error,</span>
+<span class="cstat-no" title="statement not covered" >  onClickCard,</span>
+<span class="cstat-no" title="statement not covered" >}: Props) {</span>
 <span class="cstat-no" title="statement not covered" >  return (</span>
 <span class="cstat-no" title="statement not covered" >    &lt;&gt;</span>
 <span class="cstat-no" title="statement not covered" >      {error &amp;&amp; &lt;h2 className={styles.error}&gt;{error}&lt;/h2&gt;}</span>
@@ -273,17 +219,26 @@ interface Props {
 <span class="cstat-no" title="statement not covered" >        &lt;/div&gt;</span>
 <span class="cstat-no" title="statement not covered" >      ) : (</span>
 <span class="cstat-no" title="statement not covered" >        &lt;ul className={styles.person_list}&gt;</span>
-<span class="cstat-no" title="statement not covered" >          {person &amp;&amp;</span>
-<span class="cstat-no" title="statement not covered" >            person.map(</span>
-<span class="cstat-no" title="statement not covered" >              ({ name, url, birth_year, homeworld, gender, checkbox }, i) =&gt; (</span>
+<span class="cstat-no" title="statement not covered" >          {personList &amp;&amp;</span>
+<span class="cstat-no" title="statement not covered" >            personList.map(</span>
+<span class="cstat-no" title="statement not covered" >              (</span>
+<span class="cstat-no" title="statement not covered" >                { name, url, birth_year, homeworld, gender, checkbox, id },</span>
+<span class="cstat-no" title="statement not covered" >                i</span>
+<span class="cstat-no" title="statement not covered" >              ) =&gt; (</span>
 <span class="cstat-no" title="statement not covered" >                &lt;Card</span>
 <span class="cstat-no" title="statement not covered" >                  key={`${name}_${+i}`}</span>
 <span class="cstat-no" title="statement not covered" >                  name={name}</span>
 <span class="cstat-no" title="statement not covered" >                  url={url}</span>
 <span class="cstat-no" title="statement not covered" >                  birth_year={birth_year}</span>
-<span class="cstat-no" title="statement not covered" >                  homeworld={homeworld}</span>
+<span class="cstat-no" title="statement not covered" >                  id={id || ''}</span>
+<span class="cstat-no" title="statement not covered" >                  homeworld={</span>
+<span class="cstat-no" title="statement not covered" >                    homeworldList?.has(homeworld)</span>
+<span class="cstat-no" title="statement not covered" >                      ? (homeworldList?.get(homeworld)?.name as string)</span>
+<span class="cstat-no" title="statement not covered" >                      : (homeworld as string) || 'Loading...'</span>
+<span class="cstat-no" title="statement not covered" >                  }</span>
 <span class="cstat-no" title="statement not covered" >                  gender={gender}</span>
-<span class="cstat-no" title="statement not covered" >                  checkbox={checkbox}</span>
+<span class="cstat-no" title="statement not covered" >                  checkbox={checkbox || false}</span>
+<span class="cstat-no" title="statement not covered" >                  onClickCard={onClickCard}</span>
 <span class="cstat-no" title="statement not covered" >                /&gt;</span>
 <span class="cstat-no" title="statement not covered" >              )</span>
 <span class="cstat-no" title="statement not covered" >            )}</span>
@@ -301,7 +256,7 @@ export default PersonList;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-04-11T19:39:13.287Z
+                at 2023-04-18T21:05:43.397Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

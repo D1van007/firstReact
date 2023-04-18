@@ -1,14 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../store';
 import { searchText } from '../../store/searchSlice';
 import styles from './Search.module.css';
 
 interface Props {
   inputText: (element: string) => void;
+  clearText: (element: boolean) => void;
+  submitText: (element: boolean) => void;
 }
 
-function Search({ inputText }: Props) {
-  const textSearch = useSelector((state) => state.searchText.searchText);
+function Search({ inputText, clearText, submitText }: Props) {
+  const textSearch = useSelector(
+    (state) => (state as RootState).search.searchText
+  );
   const dispatch = useDispatch();
   const [activeClose, setActiveClose] = useState(false);
 
@@ -29,13 +34,19 @@ function Search({ inputText }: Props) {
     event.preventDefault();
     if ((event as KeyboardEvent).code === 'enter') inputText(textSearch);
     else inputText(textSearch);
+    submitText(true);
   };
 
   const handleClearInput = () => {
+    clearText(true);
     dispatch(searchText(''));
     visibleClose('');
     inputText('');
   };
+
+  useEffect(() => {
+    visibleClose(textSearch);
+  }, []);
 
   return (
     <form className={styles.search_form} onSubmit={handleFormSubmit}>

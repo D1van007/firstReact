@@ -34,7 +34,7 @@ function CardExtended({ person, homeworldPerson, personFilmsList }: IProps) {
       <h2 className={styles.person_name}>{name}</h2>
 
       <div className={styles.person_info}>
-        <div className={id ? styles.person_foto : styles.myPerson_foto}>
+        <div className={id ? styles.person_photo : styles.myPerson_photo}>
           <img src={imgUrl} alt={name} />
         </div>
 

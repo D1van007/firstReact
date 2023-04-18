@@ -1,10 +1,22 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-alert */
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './Form.module.css';
-import getCreatedPersonArr from '../../utils/createdPersonArr';
 import DEAFULT_FORM from '../../constants/deafultForm';
+import {
+  addFullName,
+  addBirth,
+  addGender,
+  addHomeworld,
+  addPhoto,
+  addCheckbox,
+  addTitlePhoto,
+  createNewPerson,
+} from '../../store/formSlice';
+import { IPerson } from '../../types/type';
+import { RootState } from '../../store';
 
 function Form() {
   const {
@@ -13,18 +25,26 @@ function Form() {
     formState: { errors },
     reset,
     watch,
+    setValue,
   } = useForm({
     mode: 'onSubmit',
     defaultValues: DEAFULT_FORM,
   });
 
-  const [uploadImg, setUploadImg] = useState('');
+  const [uploadImg, setUploadImg] = useState<string>('');
+  const [uploadImgTitle, setUploadImgTitle] = useState('');
+  const formFromStore = useSelector(
+    (state) => (state as RootState).form.fillForm
+  );
+
+  const dispatch = useDispatch();
 
   const handlerImgChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     if (event.target.files) {
       const file = event.target.files[0];
+      setUploadImgTitle(file.name);
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       fileReader.onload = () => {
@@ -34,20 +54,62 @@ function Form() {
     }
   };
 
-  const setAllInputLocalStorage = () => {
-    const myForm = watch();
-    myForm.foto = uploadImg;
-    localStorage.setItem('form', JSON.stringify(myForm));
+  const createPersonList = () => {
+    const newForm = watch();
+    const newPerson: IPerson = {
+      name: newForm.fullName,
+      birth_year: newForm.birth,
+      gender: newForm.gender,
+      homeworld: newForm.homeworld,
+      url: uploadImg,
+      checkbox: newForm.checkbox,
+      id: new Date().getTime().toString(),
+    };
+    dispatch(createNewPerson(newPerson));
   };
 
-  const createPerson = () => {
-    const createdPersonArr = getCreatedPersonArr();
-    localStorage.setItem('createdPerson', JSON.stringify(createdPersonArr));
-  };
+  const myForm = watch();
+
+  useEffect(() => {
+    dispatch(addFullName(myForm.fullName));
+  }, [myForm.fullName]);
+
+  useEffect(() => {
+    dispatch(addBirth(myForm.birth));
+  }, [myForm.birth]);
+
+  useEffect(() => {
+    dispatch(addGender(myForm.gender));
+  }, [myForm.gender]);
+
+  useEffect(() => {
+    dispatch(addHomeworld(myForm.homeworld));
+  }, [myForm.homeworld]);
+
+  useEffect(() => {
+    dispatch(addPhoto(uploadImg));
+  }, [uploadImg]);
+
+  useEffect(() => {
+    dispatch(addCheckbox(myForm.checkbox));
+  }, [myForm.checkbox]);
+
+  useEffect(() => {
+    dispatch(addTitlePhoto(uploadImgTitle));
+  }, [uploadImgTitle]);
+
+  useEffect(() => {
+    setValue('fullName', formFromStore.fullName);
+    setValue('birth', formFromStore.birth);
+    setValue('gender', formFromStore.gender);
+    setValue('homeworld', formFromStore.homeworld);
+    setValue('photo', formFromStore.photo);
+    setValue('checkbox', formFromStore.checkbox);
+    setValue('titlePhoto', formFromStore.titlePhoto);
+  }, []);
 
   const handleFormSubmit = () => {
-    setAllInputLocalStorage();
-    createPerson();
+    createPersonList();
     alert('Card created and added to home page');
     reset();
   };
@@ -154,20 +216,20 @@ function Form() {
           {errors?.homeworld && <p>{errors?.homeworld.message || 'Errors!'}</p>}
         </div>
       </label>
-      <label htmlFor="foto-input" style={{ width: '100%' }}>
+      <label htmlFor="photo-input" style={{ width: '100%' }}>
         Photo:
         <input
           className={`${styles.form_input__photo} ${styles.form_input}`}
-          data-testid="foto-input"
+          data-testid="photo-input"
           type="file"
           accept="image/*"
-          {...register('foto', {
+          {...register('photo', {
             required: 'Upload your photo!',
           })}
           onChange={handlerImgChange}
         />
         <div className={`${styles.error_title}`}>
-          {errors?.foto && <p>{errors?.foto.message || 'Errors!'}</p>}
+          {errors?.photo && <p>{errors?.photo.message || 'Errors!'}</p>}
         </div>
       </label>
       <div>

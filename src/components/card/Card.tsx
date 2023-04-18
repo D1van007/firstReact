@@ -42,7 +42,7 @@ function Card({
       onClick={handleClick}
       role="presentation"
     >
-      <img className={styles.person_foto} src={imgUrl} alt={name} />
+      <img className={styles.person_photo} src={imgUrl} alt={name} />
       <div>
         <h3>{name}</h3>
 

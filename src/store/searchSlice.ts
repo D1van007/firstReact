@@ -1,21 +1,21 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
+export interface SearchTextState {
+  searchText: string;
+}
+
 const searchTextSlice = createSlice({
   name: 'search',
   initialState: {
     searchText: '',
-    searchResults: [],
   },
   reducers: {
     searchText(state, action) {
       state.searchText = action.payload;
     },
-    searchResults(state, action) {
-      state.searchResults = action.payload;
-    },
   },
 });
 
-export const { searchText, searchResults } = searchTextSlice.actions;
+export const { searchText } = searchTextSlice.actions;
 export default searchTextSlice.reducer;
