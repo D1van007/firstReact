@@ -10,7 +10,7 @@
   background-color: aliceblue;
 }
 
-.person_foto {
+.person_photo {
   width: 100%;
   height: calc(100% - 100px);
   object-fit: cover;

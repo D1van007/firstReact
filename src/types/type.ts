@@ -59,6 +59,7 @@ export interface IForm {
   birth: string;
   gender: string;
   homeworld: string;
-  foto: string;
+  photo: string;
   checkbox: boolean;
+  titlePhoto: string;
 }

@@ -21,7 +21,7 @@
   color: red;
 }
 
-.person_foto {
+.person_photo {
   width: 30%;
   margin: 1rem;
   object-fit: cover;
@@ -30,7 +30,7 @@
   border: 1px solid dimgray;
   border-radius: 10px;
 }
-.myPerson_foto {
+.myPerson_photo {
   width: 50%;
   margin: 1rem;
   object-fit: cover;
@@ -56,8 +56,7 @@ li {
 }
 
 .person_films__list,
-.person_description__list
- {
+.person_description__list {
   padding: 0;
   display: flex;
   flex-direction: column;

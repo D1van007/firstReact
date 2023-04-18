@@ -45,8 +45,7 @@ function PersonList({
                   homeworld={
                     homeworldList?.has(homeworld)
                       ? (homeworldList?.get(homeworld)?.name as string)
-                      : (homeworldList?.get(name)?.name as string) ||
-                        'Loading...'
+                      : (homeworld as string) || 'Loading...'
                   }
                   gender={gender}
                   checkbox={checkbox || false}

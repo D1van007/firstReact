@@ -3,8 +3,9 @@ const DEAFULT_FORM = {
   birth: '',
   gender: '',
   homeworld: '',
-  foto: '',
+  photo: '',
   checkbox: false,
+  titlePhoto: '',
 };
 
 export const DEAFULT_PLANET = {
