@@ -10,8 +10,8 @@ interface Props {
     | Omit<Map<string, IHomeworld>, 'set' | 'clear' | 'delete'>
     | undefined;
   onClickCard: (id: string) => void;
-  isFetching: boolean;
-  error: string;
+  isFetching: string | null;
+  error: string | null;
 }
 
 function PersonList({
@@ -24,7 +24,7 @@ function PersonList({
   return (
     <>
       {error && <h2 className={styles.error}>{error}</h2>}
-      {isFetching ? (
+      {isFetching === 'loading' ? (
         <div className={styles.loading}>
           <Loading />
         </div>

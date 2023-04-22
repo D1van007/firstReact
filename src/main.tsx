@@ -8,7 +8,7 @@ import './index.css';
 
 import App from './app/App';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById('app') as HTMLElement).render(
   <BrowserRouter>
     <Provider store={store}>
       <App />
