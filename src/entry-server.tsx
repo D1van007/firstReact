@@ -9,7 +9,8 @@ interface IRenderProps {
 }
 
 export const render = ({ path }: IRenderProps) => {
-  return ReactDOMServer.renderToString(
+  
+  return ReactDOMServer.renderToPipeableStream(
     <StaticRouter location={path}>
       <Router />
     </StaticRouter>

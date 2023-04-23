@@ -6,14 +6,13 @@ import { DEAFULT_PLANET } from '../constants/deafultForm';
 import Search from '../components/search/Search';
 import PersonList from '../components/personList/PersonList';
 import { IFilms, IHomeworld, IPerson, ISwapi } from '../types/type';
-import { API_FILMS, API_PERSON } from '../constants/api';
+import { API_PERSON } from '../constants/api';
 import getApiResource from '../utils/network';
 import Popup from '../components/popup/Popup';
 import pickUpPersonID from '../utils/personID';
 import { RootState } from '../store';
 import {
   fetchPersonList,
-  personListFilm,
   personListResult,
 } from '../store/personListSlice';
 
@@ -58,27 +57,6 @@ function Home() {
     dispatch(personListResult(personJoint));
   }, [personListAPI]);
 
-  // useEffect(() => {
-  //   const personApi = textSearch
-  //     ? `${API_PERSON}/?search=${textSearch}`
-  //     : `${API_PERSON}`;
-  //   getApiResource(personApi)
-  //     .then((res) => {
-  //       if (res) {
-  //         const personsRes = (res as ISwapi).results as IPerson[];
-  //         const personJoint = [...personsRes, ...createdPerson];
-  //         dispatch(personListResults(personJoint));
-  //         setError('');
-  //       } else if (createdPerson.length) {
-  //         dispatch(personListResults(createdPerson));
-  //         setError('');
-  //       } else {
-  //         setError('Something went wrong!');
-  //       }
-  //     })
-  //     .finally(() => setIsFetching(false));
-  // }, [searchText]);
-
   useEffect(() => {
     personListResultStore.forEach((e) => {
       if (e.homeworld.slice(0, 5) === 'https') {
@@ -87,10 +65,7 @@ function Home() {
         });
       }
     });
-    // getApiResource(API_FILMS).then((res) => {
-    //   const filmsRes = (res as ISwapi).results as IFilms[];
-    //   dispatch(personListFilm(filmsRes));
-    // });
+
   }, [personListResultStore]);
 
   const handleClickReturnID = (id: string) => {
@@ -103,12 +78,6 @@ function Home() {
   const inputText = (text: string) => {
     setSearchText(text);
   };
-  // const clearText = (isClear: boolean) => {
-  //   setIsFetching(isClear);
-  // };
-  // const submitText = (isSubmit: boolean) => {
-  //   setIsFetching(isSubmit);
-  // };
   const personPopup = personListResultStore.filter((e) =>
     e.id
       ? (e.id as string) === personID
@@ -118,37 +87,47 @@ function Home() {
     personPopup?.films?.includes(e.url)
   );
 
+
+const [isSSR, setIsSSR] = useState(true);
+
+useEffect(() => {
+  setIsSSR(false);
+}, []);
+
   return (
     <>
-      {isPopup ? (
-        <Popup
-          isPopup={closePopup}
-          person={personPopup}
-          homeworldPerson={
-            homeworldListMAP?.has(personPopup.homeworld)
-              ? (homeworldListMAP?.get(personPopup.homeworld)?.name as string)
-              : (personPopup.homeworld as string) || 'Loading...'
-          }
-          personFilmsList={
-            personFilmList.length
-              ? personFilmList.sort((a, b) => a.episode_id - b.episode_id)
-              : 'Loading...'
-          }
-        />
-      ) : null}
-      <Search
-        inputText={inputText}
-        // clearText={clearText}
-        // submitText={submitText}
-      />
-      <PersonList
-        personList={personListResultStore}
-        homeworldList={homeworldListMAP}
-        isFetching={statusPersonList}
-        error={error}
-        onClickCard={handleClickReturnID}
-      />
-      ;
+      {!isSSR &&
+        <div>
+          {isPopup ? (
+            <Popup
+              isPopup={closePopup}
+              person={personPopup}
+              homeworldPerson={
+                homeworldListMAP?.has(personPopup.homeworld)
+                  ? (homeworldListMAP?.get(personPopup.homeworld)
+                      ?.name as string)
+                  : (personPopup.homeworld as string) || 'Loading...'
+              }
+              personFilmsList={
+                personFilmList.length
+                  ? personFilmList.sort((a, b) => a.episode_id - b.episode_id)
+                  : 'Loading...'
+              }
+            />
+          ) : null}
+          <Search
+            inputText={inputText}
+          />
+          <PersonList
+            personList={personListResultStore}
+            homeworldList={homeworldListMAP}
+            isFetching={statusPersonList}
+            error={error}
+            onClickCard={handleClickReturnID}
+          />
+          ;
+        </div>
+      }
     </>
   );
 }

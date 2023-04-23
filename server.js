@@ -1,16 +1,18 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { renderToPipeableStream } from 'react-dom/server';
 
 import { createApp, fromNodeMiddleware, toNodeListener } from 'h3';
 import { createServer as createViteServer } from 'vite';
 import { listen } from 'listhen';
 import express from 'express';
 import sirv from 'sirv';
+// import App from './src/app/mainApp'
 
 const DEV_ENV = 'development';
 
-const bootstrap = async () => {
-const app = createApp();
+const createServer = async () => {
+  const app = createApp();
   let vite;
 
   if (process.env.NODE_ENV === DEV_ENV) {
@@ -33,6 +35,7 @@ const app = createApp();
   app.use(
     '*',
     fromNodeMiddleware(async (req, res, next) => {
+
       const url = req.originalUrl;
       let template, render;
 
@@ -66,7 +69,7 @@ const app = createApp();
   return { app, vite };
 };
 
-bootstrap()
+createServer()
   .then(async ({ app }) => {
     await listen(toNodeListener(app), { port: 3333 });
   })
