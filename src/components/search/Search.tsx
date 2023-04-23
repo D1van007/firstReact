@@ -6,11 +6,11 @@ import styles from './Search.module.css';
 
 interface Props {
   inputText: (element: string) => void;
-  clearText: (element: boolean) => void;
-  submitText: (element: boolean) => void;
+  // clearText: (element: boolean) => void;
+  // submitText: (element: boolean) => void;
 }
 
-function Search({ inputText, clearText, submitText }: Props) {
+function Search({ inputText /* , clearText, submitText */ }: Props) {
   const textSearch = useSelector(
     (state) => (state as RootState).search.searchText
   );
@@ -34,11 +34,11 @@ function Search({ inputText, clearText, submitText }: Props) {
     event.preventDefault();
     if ((event as KeyboardEvent).code === 'enter') inputText(textSearch);
     else inputText(textSearch);
-    submitText(true);
+    // submitText(true);
   };
 
   const handleClearInput = () => {
-    clearText(true);
+    // clearText(true);
     dispatch(searchText(''));
     visibleClose('');
     inputText('');
