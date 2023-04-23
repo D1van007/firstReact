@@ -11,10 +11,7 @@ import getApiResource from '../utils/network';
 import Popup from '../components/popup/Popup';
 import pickUpPersonID from '../utils/personID';
 import { RootState } from '../store';
-import {
-  fetchPersonList,
-  personListResult,
-} from '../store/personListSlice';
+import { fetchPersonList, personListResult } from '../store/personListSlice';
 
 function Home() {
   const [searchText, setSearchText] = useState('');
@@ -65,7 +62,6 @@ function Home() {
         });
       }
     });
-
   }, [personListResultStore]);
 
   const handleClickReturnID = (id: string) => {
@@ -87,47 +83,33 @@ function Home() {
     personPopup?.films?.includes(e.url)
   );
 
-
-const [isSSR, setIsSSR] = useState(true);
-
-useEffect(() => {
-  setIsSSR(false);
-}, []);
-
   return (
     <>
-      {!isSSR &&
-        <div>
-          {isPopup ? (
-            <Popup
-              isPopup={closePopup}
-              person={personPopup}
-              homeworldPerson={
-                homeworldListMAP?.has(personPopup.homeworld)
-                  ? (homeworldListMAP?.get(personPopup.homeworld)
-                      ?.name as string)
-                  : (personPopup.homeworld as string) || 'Loading...'
-              }
-              personFilmsList={
-                personFilmList.length
-                  ? personFilmList.sort((a, b) => a.episode_id - b.episode_id)
-                  : 'Loading...'
-              }
-            />
-          ) : null}
-          <Search
-            inputText={inputText}
-          />
-          <PersonList
-            personList={personListResultStore}
-            homeworldList={homeworldListMAP}
-            isFetching={statusPersonList}
-            error={error}
-            onClickCard={handleClickReturnID}
-          />
-          ;
-        </div>
-      }
+      {isPopup ? (
+        <Popup
+          isPopup={closePopup}
+          person={personPopup}
+          homeworldPerson={
+            homeworldListMAP?.has(personPopup.homeworld)
+              ? (homeworldListMAP?.get(personPopup.homeworld)?.name as string)
+              : (personPopup.homeworld as string) || 'Loading...'
+          }
+          personFilmsList={
+            personFilmList.length
+              ? personFilmList.sort((a, b) => a.episode_id - b.episode_id)
+              : 'Loading...'
+          }
+        />
+      ) : null}
+      <Search inputText={inputText} />
+      <PersonList
+        personList={personListResultStore}
+        homeworldList={homeworldListMAP}
+        isFetching={statusPersonList}
+        error={error}
+        onClickCard={handleClickReturnID}
+      />
+      ;
     </>
   );
 }
