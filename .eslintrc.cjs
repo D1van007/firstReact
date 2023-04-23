@@ -17,9 +17,14 @@ module.exports = {
     parser: '@typescript-eslint/parser',
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: './tsconfig.json',
+    project: ['./tsconfig.json'],
   },
-  plugins: ['react', '@typescript-eslint', 'prettier'],
+  plugins: ['react', 'typescript-eslint/recommended', 'prettier'],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
   rules: {
     'react/react-in-jsx-scope': 0,
     'import/no-extraneous-dependencies': 0,
