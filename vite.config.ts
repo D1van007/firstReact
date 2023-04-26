@@ -1,14 +1,16 @@
-/* eslint-disable import/no-extraneous-dependencies */
 /// <reference types="vitest" />
 /// <reference types="vite/client" />
 
+import eslintPlugin from '@nabla/vite-plugin-eslint';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-
+  plugins: [react(), eslintPlugin()],
+  esbuild: { jsx: 'automatic' },
+  build: {
+    minify: false,
+  },
   test: {
     globals: true,
     environment: 'jsdom',

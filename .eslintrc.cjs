@@ -14,15 +14,22 @@ module.exports = {
   overrides: [],
   parser: '@typescript-eslint/parser',
   parserOptions: {
+    parser: '@typescript-eslint/parser',
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: './tsconfig.json',
+    project: ['./tsconfig.json'],
   },
-  plugins: ['react', '@typescript-eslint', 'prettier'],
+  plugins: ['react', 'typescript-eslint/recommended', 'prettier'],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
   rules: {
     'react/react-in-jsx-scope': 0,
     'import/no-extraneous-dependencies': 0,
     'import/no-useless-path-segments': 0,
     'react/prefer-stateless-function': 0,
+    'react-hooks/exhaustive-deps': 0,
   },
 };

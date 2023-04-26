@@ -1,0 +1,70 @@
+.person_content {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  max-width: 50rem;
+  min-height: max-content;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid dimgray;
+  border-radius: 10px;
+  text-align: center;
+  background-color: aliceblue;
+}
+
+.person_info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.person_name {
+  color: red;
+}
+
+.person_photo {
+  width: 30%;
+  margin: 1rem;
+  object-fit: cover;
+  object-position: center;
+  overflow: hidden;
+  border: 1px solid dimgray;
+  border-radius: 10px;
+}
+.myPerson_photo {
+  width: 50%;
+  margin: 1rem;
+  object-fit: cover;
+  object-position: center;
+  overflow: hidden;
+  border: 1px solid dimgray;
+  border-radius: 10px;
+}
+
+.person_description {
+  margin-top: 1rem;
+  width: 30%;
+  text-align: start;
+}
+.myPerson_description {
+  margin-top: 1rem;
+  width: 50%;
+  text-align: start;
+}
+
+li {
+  list-style-type: none;
+}
+
+.person_films__list,
+.person_description__list {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.person_films {
+  margin-top: 1rem;
+  text-align: start;
+  width: 40%;
+}

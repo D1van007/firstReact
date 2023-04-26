@@ -12,7 +12,7 @@
   color: white;
   font-size: 1.2rem;
   width: 100%;
-  outline:none;
+  outline: none;
   padding: 0 0.5rem;
   border-radius: 5px;
 }
@@ -20,4 +20,23 @@
 .search_form__btn {
   width: 5rem;
   border-radius: 5px;
+}
+
+.close_btn {
+  width: 1rem;
+  position: absolute;
+  right: 0.4rem;
+  top: 0.4rem;
+  cursor: pointer;
+  visibility: hidden;
+}
+
+.active {
+    visibility: visible;
+}
+
+.input_container {
+  position: relative;
+  display: flex;
+  width: 100%;
 }

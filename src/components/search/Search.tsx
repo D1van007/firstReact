@@ -1,52 +1,77 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable react/destructuring-assignment */
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../store';
+import { searchText } from '../../store/searchSlice';
 import styles from './Search.module.css';
 
-interface IState {
-  text: string;
+interface Props {
+  inputText: (element: string) => void;
+  // clearText: (element: boolean) => void;
+  // submitText: (element: boolean) => void;
 }
 
-class Search extends Component<object, IState> {
-  constructor(props: object) {
-    super(props);
-    this.state = { text: '' };
-  }
+function Search({ inputText /* , clearText, submitText */ }: Props) {
+  const textSearch = useSelector(
+    (state) => (state as RootState).search.searchText
+  );
+  const dispatch = useDispatch();
+  const [activeClose, setActiveClose] = useState(false);
 
-  componentDidMount() {
-    const valueLocalStorage = localStorage.getItem('searchValue');
-    if (valueLocalStorage) this.setState({ text: valueLocalStorage });
-  }
+  const visibleClose = (inputValue: string) => {
+    if (inputValue.length > 0) setActiveClose(true);
+    else setActiveClose(false);
+  };
 
-  componentWillUnmount() {
-    localStorage.setItem('searchValue', `${this.state.text}`);
-  }
-
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.currentTarget.value;
-    this.setState({ text: input });
+    dispatch(searchText(input));
+    visibleClose(input);
   };
 
-  handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (
+    event: React.FormEvent<HTMLFormElement> | KeyboardEvent
+  ) => {
     event.preventDefault();
-    localStorage.setItem('searchValue', `${this.state.text}`);
+    if ((event as KeyboardEvent).code === 'enter') inputText(textSearch);
+    else inputText(textSearch);
+    // submitText(true);
   };
 
-  render() {
-    return (
-      <form className={styles.search_form} onSubmit={this.handleFormSubmit}>
+  const handleClearInput = () => {
+    // clearText(true);
+    dispatch(searchText(''));
+    visibleClose('');
+    inputText('');
+  };
+
+  useEffect(() => {
+    visibleClose(textSearch);
+  }, []);
+
+  return (
+    <form className={styles.search_form} onSubmit={handleFormSubmit}>
+      <div className={styles.input_container}>
         <input
           className={styles.search_form__input}
           data-testid="search-input"
           name="search"
-          value={this.state.text}
-          onChange={this.handleChange}
+          value={textSearch}
+          onChange={handleChange}
         />
-        <button type="submit" className={styles.search_form__btn}>
-          Search
-        </button>
-      </form>
-    );
-  }
+        <div onClick={handleClearInput} role="presentation">
+          <img
+            className={`${styles.close_btn} ${
+              activeClose ? `${styles.active}` : ''
+            }`}
+            src="/close.svg"
+            alt="close"
+          />
+        </div>
+      </div>
+      <button type="submit" className={styles.search_form__btn}>
+        Search
+      </button>
+    </form>
+  );
 }
 export default Search;

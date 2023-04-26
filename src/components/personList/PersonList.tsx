@@ -1,42 +1,62 @@
-/* eslint-disable react/destructuring-assignment */
-import React from 'react';
-import getApiPerson from '../../utils/network';
 import styles from './PersonList.module.css';
-import { API_PERSON } from '../../constants/api';
-import { IPerson, ISwapi } from '../../types/type';
+
+import { IHomeworld, IPerson } from '../../types/type';
+import Loading from '../UI/UILoading/Loading';
 import Card from '../card/Card';
 
-interface IState {
-  person: [] | IPerson[];
+interface Props {
+  personList: IPerson[];
+  homeworldList:
+    | Omit<Map<string, IHomeworld>, 'set' | 'clear' | 'delete'>
+    | undefined;
+  onClickCard: (id: string) => void;
+  isFetching: string | null;
+  error: string | null;
 }
 
-class PeopleList extends React.Component<object, IState> {
-  constructor(props: object) {
-    super(props);
-    this.state = { person: [] };
-  }
-
-  componentDidMount() {
-    getApiPerson(API_PERSON).then((res) => {
-      const person = (res as ISwapi).results as IPerson[];
-      this.setState({ person });
-    });
-  }
-
-  render() {
-    return (
-      <ul className={styles.person_list}>
-        {this.state.person.map(({ name, url, birth_year }) => (
-          <Card
-            key={`${name}`}
-            name={`${name}`}
-            url={`${url}`}
-            birth_year={`${birth_year}`}
-          />
-        ))}
-      </ul>
-    );
-  }
+function PersonList({
+  personList,
+  homeworldList,
+  isFetching,
+  error,
+  onClickCard,
+}: Props) {
+  return (
+    <>
+      {error && <h2 className={styles.error}>{error}</h2>}
+      {isFetching === 'loading' ? (
+        <div className={styles.loading}>
+          <Loading />
+        </div>
+      ) : (
+        <ul className={styles.person_list}>
+          {personList &&
+            personList.map(
+              (
+                { name, url, birth_year, homeworld, gender, checkbox, id },
+                i
+              ) => (
+                <Card
+                  key={`${name}_${+i}`}
+                  name={name}
+                  url={url}
+                  birth_year={birth_year}
+                  id={id || ''}
+                  homeworld={
+                    homeworldList?.has(homeworld)
+                      ? (homeworldList?.get(homeworld)?.name as string)
+                      : (homeworld as string) || 'Loading...'
+                  }
+                  gender={gender}
+                  checkbox={checkbox || false}
+                  onClickCard={onClickCard}
+                />
+              )
+            )}
+        </ul>
+      )}
+    </>
+  );
 }
 
-export default PeopleList;
+export default PersonList;
